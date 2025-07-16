@@ -15,7 +15,12 @@ $router->get("/admin","App\controllers\AdminControllers@renderUser");
 // Room management routes
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
 
+// service management routes
+$router->get("/service_manage","App\controllers\ServiceControllers@renderService");
 
+// Use service management routes
+$router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
 
-
+// Bill management routes
+$router->get("/bill_manage","App\controllers\BillControllers@renderBill");
 $router->run();

@@ -21,7 +21,8 @@ body {
 }
 
 .sidebar .nav-link.active,
-.sidebar .nav-link:hover {
+.sidebar .nav-link:hover,
+.accordion-body .nav-item:hover {
     background: #495057;
     color: #ffc107;
 }
@@ -29,4 +30,7 @@ body {
 .main-content {
     margin-left: 220px;
     padding: 30px;
+}
+.accordion-body {
+    padding: 0 10px;
 }
