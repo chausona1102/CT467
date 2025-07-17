@@ -10,7 +10,6 @@ class BillControllers extends Controller
             // 'bills' => $billMdl->select() // Example of fetching bills
         ];
         $this->render('admin/bill_manage', $data);
-
     }
 
     public function addBill()

@@ -17,7 +17,7 @@ $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
 
 // service management routes
 $router->get("/service_manage","App\controllers\ServiceControllers@renderService");
-
+$router->get("/admin/service/create","App\controllers\ServiceControllers@addService");
 // Use service management routes
 $router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
 

@@ -15,7 +15,10 @@ class ServiceControllers extends Controller
 
     public function addService()
     {
-        // Code to add a new service
+        $data = [
+            // 'service' => $serviceMdl->getServiceData() // Example of fetching service data for creation
+        ];
+        $this->render('admin/create_service', $data);
     }
     
     public function editService($id)

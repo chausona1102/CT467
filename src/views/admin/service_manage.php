@@ -16,7 +16,7 @@
                 <?php unset($_SESSION['success_Mess']); ?>
             <?php endif; ?>
 
-            <a href="/admin/services/create" class="btn btn-success mb-3">
+            <a href="/admin/service/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 

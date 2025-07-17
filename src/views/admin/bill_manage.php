@@ -5,7 +5,7 @@
 <?php $this->stop(); ?>
 <?php $this->start("page-content"); ?>
 <div class="container">
-    <h2 class="text-center animate__animated animate__bounce">Sử Dụng Dịch Vụ</h2>
+    <h2 class="text-center animate__animated animate__bounce">Hóa Đơn</h2>
     <div class="row">
         <div class="col-12">
             <?php if (isset($_SESSION['success_Mess'])): ?>
