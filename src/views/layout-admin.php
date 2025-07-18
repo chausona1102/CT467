@@ -14,10 +14,19 @@
 <body>
     <nav class="sidebar d-flex flex-column">
         <h4 class="text-center mb-4">Quản lý ký túc xá</h4>
-        <a class="nav-link room_manage" href="/room_manage">Quản lý phòng ở</a>
+        <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseServices">
+            Quản lý phòng
+        </a>
+        <div id="collapseServices" class="collapse" data-bs-parent="#sidebarAccordion">
+            <div class="accordion-body">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a href="/room_manage" class="nav-link">➤ Phòng</a></li>
+                    <li class="nav-item"><a href="/room_type_manage" class="nav-link">➤ Loại phòng</a></li>
+                </ul>
+            </div>
+        </div>
         <a class="nav-link student_manage" href="/student_manage">Quản lý sinh viên</a>
         <a class="nav-link statistical_manage" href="/statistical_manage">Báo cáo và thống kê</a>
-        <!-- <a class="nav-link cost_manage" href="/cost_manage">Quản lí chi phí và thanh toán</a> -->
         <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseServices">
             Quản lý dịch vụ và hóa đơn
         </a>
@@ -28,7 +37,7 @@
                     <li class="nav-item"><a href="/use_service" class="nav-link">➤ Sử dụng dịch vụ</a></li>
                     <li class="nav-item"><a href="/bill_manage" class="nav-link">➤ Hóa đơn</a></li>
                 </ul>
-            </div>
+            </div>  
         </div>
     </nav>
     <div class="main-content">

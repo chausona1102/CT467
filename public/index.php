@@ -12,8 +12,13 @@ $router->get("/","App\controllers\AdminControllers@renderUser");
 $router->get("/home","App\controllers\AdminControllers@renderUser");
 $router->get("/admin","App\controllers\AdminControllers@renderUser");
 
-// Room management routes
+// Login route
+$router->get("/login","App\controllers\LoginControllers@renderLogin");
+$router->post("/login","App\controllers\LoginControllers@checkLogin");
+
+// Room management routes filter_function()
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
+$router->get("/filter_function","App\controllers\RoomControllers@filter_function");
 
 // service management routes
 $router->get("/service_manage","App\controllers\ServiceControllers@renderService");

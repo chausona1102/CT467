@@ -27,4 +27,18 @@ class RoomControllers extends Controller
         // This could involve fetching data from a database and updating it
         echo "Edit Room functionality not implemented yet for room ID: $id";
     }
+    public function filter_function() {
+        // Logic to filter rooms based on criteria
+        // This could involve fetching filtered data from a database
+        $codeRoom = $_GET['codeRoom'] ?? '';
+        $category = $_GET['category'] ?? '';
+        $status = $_GET['status'] ?? '';
+
+        $roomMdl = new \App\models\RoomModel();
+        $filteredRooms = $roomMdl->filter($codeRoom, $category, $status);
+        $data = [
+            'filter_result' => $filteredRooms
+        ];
+        $this->render('admin/room_manage', $data);
+    }
 }

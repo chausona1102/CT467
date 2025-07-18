@@ -10,7 +10,7 @@
             <div class="card" style="width: 12rem;">
                 <img src="https://icon-library.com/images/room-icon/room-icon-2.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Quản lí phòng ở</h5>
+                    <h5 class="card-title">Quản lí phòng</h5>
                 </div>
             </div>
         </a>
@@ -38,14 +38,6 @@
                 </div>
             </div>
         </a>
-        <!-- <a href="/repair_manage" class="col-2 d-block m-2">
-            <div class="card" style="width: 12rem;">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.GBMlNMB61EQM3kfzht9dBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Bảo trì và sửa chữa</h5>
-                </div>
-            </div>
-        </a> -->
     </div>
 </div>
 <?php $this->stop(); ?>
