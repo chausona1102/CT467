@@ -30,8 +30,6 @@
                 </ul>
             </div>
         </div>
-
-        <a class="nav-link repair_manage" href="/repair_manage">Bảo trì và sửa chữa</a>
     </nav>
     <div class="main-content">
         <?= $this->section('page-content') ?>
