@@ -34,3 +34,8 @@ body {
 .accordion-body {
     padding: 0 10px;
 }
+
+.active {
+    background: #495057;
+    color: #ffc107 !important;
+}
