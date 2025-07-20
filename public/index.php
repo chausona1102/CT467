@@ -45,4 +45,7 @@ $router->get("/use_service","App\controllers\UseServiceControllers@renderUseServ
 
 // Bill management routes
 $router->get("/bill_manage","App\controllers\BillControllers@renderBill");
+// Contract management routes
+$router->get("/contract_manage","App\controllers\ContractControllers@renderContract");
+
 $router->run();

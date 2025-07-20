@@ -27,7 +27,7 @@
             </div>
         </div>
         <a class="nav-link student_manage" href="/student_manage">Quản lý sinh viên</a>
-        <a class="nav-link statistical_manage" href="/statistical_manage">Báo cáo và thống kê</a>
+        
         <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseServices1">
             Quản lý dịch vụ và hóa đơn
         </a>
@@ -40,6 +40,8 @@
                 </ul>
             </div>
         </div>
+        <a class="nav-link contract_manage" href="/contract_manage">Quản lý hợp đồng</a>
+        <a class="nav-link statistical_manage" href="/statistical_manage">Báo cáo và thống kê</a>
         <form action="/logout" method="POST">
             <button type="submit" class="btn btn-primary m-4">Đăng xuất</button>
         </form>
