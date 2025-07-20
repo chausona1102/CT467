@@ -14,17 +14,80 @@ form {
     justify-content: center;
     border-radius: 15px;
     border: 1px solid #ccc;
-    width: 25vw;
-    padding: 10px 10px 30px 10px;
-}
-form input {
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
+    width: 20vw;
+    padding: 0 7px;
 }
 
 h1 {
     
+}
+#header h1 {
+    position: absolute;
+    z-index: 1000;
+    color: #fff;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+#banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 10vh;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(/img/Banner-1200x200.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+form legend {
+    width: 100%;
+    margin-bottom: 0px;
+    background: #1f5ca9;
+    text-align: center !important;
+    padding: .5rem;
+    color: #fff;
+    text-transform: uppercase;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    font-size: 16pt;
+}
+
+form .form-group {
+    /* width: 80%; */
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group label {
+    text-align: left;
+}
+
+form input {
+    /* width: 100%; */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+button {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 30%;
+    background-color: #1f5ca9;
+    color: #fff;
+    font-weight: bold;
 }
