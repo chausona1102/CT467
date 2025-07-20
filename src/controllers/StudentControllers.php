@@ -11,6 +11,13 @@ class StudentControllers extends Controller
         $data = [
             // 'students' => $studentMdl->select() // Example of fetching students
         ];
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            // $studentMdl = new \App\models\StudentModel();
+            // $data['students'] = $studentMdl->select();
+        } else {
+            header('Location: /login');
+            exit();
+        }
         $this->render('admin/student_manage', $data);
     }
 

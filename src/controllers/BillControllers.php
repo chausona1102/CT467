@@ -9,6 +9,10 @@ class BillControllers extends Controller
         $data = [
             // 'bills' => $billMdl->select() // Example of fetching bills
         ];
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            header('Location: /login');
+            exit();
+        }
         $this->render('admin/bill_manage', $data);
     }
 

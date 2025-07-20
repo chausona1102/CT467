@@ -11,6 +11,13 @@ class RoomControllers extends Controller
         $data = [
             // 'rooms' => $roomMdl->select() // Example of fetching rooms
         ];
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            // $roomMdl = new \App\models\RoomModel();
+            // $data['rooms'] = $roomMdl->select();
+        } else {
+            header('Location: /login');
+            exit();
+        }
         $this->render('admin/room_manage', $data);
     }
 

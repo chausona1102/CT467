@@ -8,28 +8,34 @@
             $data = [];
             $this->render("login",$data);
         }
-        public function checkLogin() {
-            // Logic to check login credentials
-            // This could involve checking against a database or an authentication service
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $username = $_POST['username'] ?? '';
-                $password = $_POST['password'] ?? '';
+        public function check()
+    {
+        $usern = trim($_POST["username"]);
+        $pw = $_POST["password"];
 
-                // Here you would typically check the credentials against a database
-                // For demonstration, let's assume the credentials are valid
-                if ($username === 'admin' && $password === 'password') {
-                    // Redirect to the home page or dashboard after successful login
-                    header('Location: /home');
-                    exit;
-                } else {
-                    // Handle invalid credentials
-                    $data = ['error' => 'Invalid username or password'];
-                    $this->render('login', $data);
-                }
-            } else {
-                // If not a POST request, redirect to the login page
-                header('Location: /login');
-                exit;
+        $userMdl = new \App\models\UserModel();
+        $user = $userMdl->selectByUsername($usern);
+
+
+        if (!$user) {
+            echo "<script>alert('Sai tên tài khoản')</script>";
+            echo "<script>window.location.href = '/login';</script>";
+            exit();
+        } else if ($user && password_verify($pw, $user["password"])) {
+            $_SESSION["username"] = $usern;
+            if ($user['type_account'] == 'admin') {
+                $_SESSION['isAdmin'] = true;
+                header("location: /");
+                exit();
+            } else if ($user['type_account'] == 'guest') {
+                $_SESSION['user'] = $usern;
+                header("location: /error");
+                exit();
             }
+        } else {
+            echo "<script>alert('Sai mật khẩu!')</script>";
+            echo "<script>window.location.href = '/login';</script>";
+            exit();
         }
+    }
     }

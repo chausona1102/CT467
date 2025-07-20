@@ -12,9 +12,21 @@ $router->get("/","App\controllers\AdminControllers@renderUser");
 $router->get("/home","App\controllers\AdminControllers@renderUser");
 $router->get("/admin","App\controllers\AdminControllers@renderUser");
 
+// Signup route
+$router->get("/signup","App\controllers\SignupControllers@renderSignup");
+$router->post("/signup","App\controllers\SignupControllers@addUser");
+
 // Login route
 $router->get("/login","App\controllers\LoginControllers@renderLogin");
-$router->post("/login","App\controllers\LoginControllers@checkLogin");
+$router->post("/login","App\controllers\LoginControllers@check");
+
+// Logout route
+$router->post("/logout", function() {
+    session_start();
+    session_destroy();
+    header("Location: /login");
+    exit();
+});
 
 // Room management routes
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");

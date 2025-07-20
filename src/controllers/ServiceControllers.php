@@ -10,6 +10,13 @@ class ServiceControllers extends Controller
         $data = [
             // 'services' => $serviceMdl->select() // Example of fetching services
         ];
+        if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            // $serviceMdl = new \App\models\ServiceModel();
+            // $data['services'] = $serviceMdl->select();
+        } else {
+            header('Location: /login');
+            exit();
+        }
         $this->render('admin/service_manage', $data);
     }
 

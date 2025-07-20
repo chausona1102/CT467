@@ -7,7 +7,8 @@
     <link rel="shortcut icon" href="" type="image/x-icon">
     <?= $this->section('page-css') ?>
     <!-- Bootstrapv5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Quản lí kí túc xá</title>
 </head>
 
@@ -37,14 +38,20 @@
                     <li class="nav-item"><a href="/use_service" class="nav-link">➤ Sử dụng dịch vụ</a></li>
                     <li class="nav-item"><a href="/bill_manage" class="nav-link">➤ Hóa đơn</a></li>
                 </ul>
-            </div>  
+            </div>
         </div>
+        <form action="/logout" method="POST">
+            <button type="submit" class="btn btn-primary m-4">Đăng xuất</button>
+        </form>
+
     </nav>
     <div class="main-content">
         <?= $this->section('page-content') ?>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
     <script src="/js/nav.js"></script>
 </body>
 

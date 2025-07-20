@@ -17,6 +17,12 @@
             $data = [
                 // 'users' => $userMdl->select()
             ];
+            if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+                $data['users'] = $userMdl->select();
+            } else {
+                header('Location: /login');
+                exit();
+            }
             $this->render('admin/admin', $data);
         }
     }
