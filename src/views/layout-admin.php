@@ -28,10 +28,10 @@
         </div>
         <a class="nav-link student_manage" href="/student_manage">Quản lý sinh viên</a>
         <a class="nav-link statistical_manage" href="/statistical_manage">Báo cáo và thống kê</a>
-        <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseServices">
+        <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseServices1">
             Quản lý dịch vụ và hóa đơn
         </a>
-        <div id="collapseServices" class="collapse" data-bs-parent="#sidebarAccordion">
+        <div id="collapseServices1" class="collapse" data-bs-parent="#sidebarAccordion">
             <div class="accordion-body">
                 <ul class="nav flex-column">
                     <li class="nav-item"><a href="/service_manage" class="nav-link">➤ Dịch vụ</a></li>
