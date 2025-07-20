@@ -10,10 +10,11 @@ class BillControllers extends Controller
             // 'bills' => $billMdl->select() // Example of fetching bills
         ];
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+            $this->render('admin/bill_manage', $data);
+        } else {
             header('Location: /login');
             exit();
         }
-        $this->render('admin/bill_manage', $data);
     }
 
     public function addBill()
@@ -30,4 +31,6 @@ class BillControllers extends Controller
     {
         // Code to delete a bill by ID
     }
+
+    
 }
