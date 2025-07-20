@@ -30,7 +30,10 @@ class ServiceControllers extends Controller
     
     public function editService($id)
     {
-        // Code to edit an existing service by ID
+        $data = [
+            // 'service' => $serviceMdl->getServiceById($id) // Example of fetching service data by ID
+        ];
+        $this->render('admin/edit_service', $data);
     }
 
     public function deleteService($id)

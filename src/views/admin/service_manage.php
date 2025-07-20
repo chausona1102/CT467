@@ -54,10 +54,10 @@
                         <td>3.000đ/kWh</td>
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/services/edit/" class="btn btn-xs btn-warning">
+                                <a href="/admin/service/edit/DV01" class="btn btn-xs btn-warning">
                                     <i alt="Edit" class="fa fa-pencil"></i> Sửa
                                 </a>
-                                <form class="ms-2" action="/admin/services/delete/" method="POST">
+                                <form class="ms-2" action="/admin/service/delete/DV01" method="POST">
                                     <button type="submit" class="btn btn-xs btn-danger" name="delete-service">
                                         <i alt="Delete" class="fa fa-trash"></i> Xóa
                                     </button>

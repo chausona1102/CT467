@@ -8,7 +8,7 @@
     <div class="card card-custom">
         <div class="card-header bg-white border-0 py-4">
             <h2 class="card-title text-center mb-0 text-danger">
-                <i class="bi bi-phone me-2"></i>Thêm Dịch Vụ Mới
+                <i class="bi bi-phone me-2"></i>Sửa Dịch Vụ
             </h2>
         </div>
         <div class="container my-4">

@@ -40,6 +40,8 @@ $router->get("/filter_student","App\controllers\StudentControllers@filter_studen
 // service management routes
 $router->get("/service_manage","App\controllers\ServiceControllers@renderService");
 $router->get("/admin/service/create","App\controllers\ServiceControllers@addService");
+$router->get("/admin/service/edit/{id}","App\controllers\ServiceControllers@editService");
+$router->post("/admin/service/delete/{id}","App\controllers\ServiceControllers@deleteService");
 // Use service management routes
 $router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
 
@@ -48,4 +50,6 @@ $router->get("/bill_manage","App\controllers\BillControllers@renderBill");
 // Contract management routes
 $router->get("/contract_manage","App\controllers\ContractControllers@renderContract");
 
+// Statistical management routes
+$router->get("/statistical_manage","App\controllers\StatisticalControllers@renderStatistical");
 $router->run();
