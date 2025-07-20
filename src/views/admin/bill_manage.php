@@ -16,7 +16,7 @@
                 <?php unset($_SESSION['success_Mess']); ?>
             <?php endif; ?>
 
-            <a href="/admin/bill_manage/create" class="btn btn-success mb-3">
+            <a href="/admin/bill-manage/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 
@@ -60,10 +60,10 @@
                         <td><span class="badge bg-danger">Chưa thanh toán</span></td>
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/bill_manage/edit/" class="btn btn-xs btn-warning">
+                                <a href="/admin/bill-manage/edit/HD001" class="btn btn-xs btn-warning">
                                     <i alt="Edit" class="fa fa-pencil"></i> Sửa
                                 </a>
-                                <form class="ms-2" action="/admin/bill_manage/delete/" method="POST">
+                                <form class="ms-2" action="/admin/bill-manage/delete/HD001" method="POST">
                                     <button type="submit" class="btn btn-xs btn-danger" name="delete-service">
                                         <i alt="Delete" class="fa fa-trash"></i> Xóa
                                     </button>

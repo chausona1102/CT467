@@ -60,7 +60,7 @@
                         <td>2023</td>
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/use-service/edit/" class="btn btn-xs btn-warning">
+                                <a href="/admin/use-service/edit/DV01" class="btn btn-xs btn-warning">
                                     <i alt="Edit" class="fa fa-pencil"></i> Sửa
                                 </a>
                                 <form class="ms-2" action="/admin/use-service/delete/" method="POST">

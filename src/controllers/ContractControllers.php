@@ -19,12 +19,18 @@ class ContractControllers extends Controller
 
     public function addContract()
     {
-        // Code to add a new contract
+        $data = [
+            // 'services' => $serviceMdl->select() // Example of fetching services for contract creation
+        ];
+        $this->render('admin/create_contract', $data);
     }
 
     public function editContract($id)
     {
-        // Code to edit an existing contract by ID
+        $data = [
+            // 'contract' => $contractMdl->selectById($id) // Example of fetching a contract by ID
+        ];
+        $this->render('admin/edit_contract', $data);
     }
 
     public function deleteContract($id)

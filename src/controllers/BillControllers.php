@@ -19,12 +19,18 @@ class BillControllers extends Controller
 
     public function addBill()
     {
-        // Code to add a new bill
+        $data = [
+            // 'services' => $serviceMdl->select() // Example of fetching services for the form
+        ];
+        $this->render('admin/create_bill', $data);
     }
 
     public function editBill($id)
     {
-        // Code to edit an existing bill by ID
+        $data = [
+            // 'bill' => $billMdl->find($id) // Example of fetching a specific bill for editing
+        ];
+        $this->render('admin/edit_bill', $data);
     }
 
     public function deleteBill($id)
