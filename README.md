@@ -1,7 +1,5 @@
 # ĐỒ ÁN HỌC PHẦN QUẢN TRỊ DỮ LIỆU
 - Tên đồ án: Trang web quản lí kí túc xá
-## Mục đích
-Đây là repo phục vụ mục đích học tập về một trang web quản lí kí túc xá đơn giản.
 ## Nội dung repo
 - SOURCE CODE, DATABASE của trang web quản lí kí túc xá
 ## Quyền sở hữu
@@ -15,7 +13,6 @@
    Họ tên: Nguyễn Văn Kha
    MSSV: B2205877
    ```
-
 ## Ghi chú
 - Repo này chỉ dùng cho mục đích học tập, tham khảo.
 
