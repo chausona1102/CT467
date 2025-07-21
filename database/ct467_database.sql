@@ -171,3 +171,30 @@ SELECT
     SUM(TongTien) AS TongDoanhThu
 FROM HoaDon
 GROUP BY Nam, Thang, TrangThai;
+
+-- Procedure insert LoaiPhong 
+DELIMITER //
+
+CREATE PROCEDURE ThemLoaiPhong(
+    IN ma_loai VARCHAR(10),
+    IN ten_loai VARCHAR(50),
+    IN gia DECIMAL(10, 2)
+)
+BEGIN
+    INSERT INTO loaiphong (MaLoaiPhong, TenLoaiPhong, GiaThue)
+    VALUES (ma_loai, ten_loai, gia);
+END//
+
+DELIMITER ;
+
+
+-- Phòng nam 
+CALL ThemLoaiPhong('B002','Phòng nam 2 người ở', 800000);
+CALL ThemLoaiPhong('B004','Phòng nam 4 người ở', 600000);
+CALL ThemLoaiPhong('B008','Phòng nam 8 người ở', 400000);
+-- Phòng nữ
+CALL ThemLoaiPhong('G002','Phòng nữ 2 người ở', 800000);
+CALL ThemLoaiPhong('G004','Phòng nữ 4 người ở', 600000);
+CALL ThemLoaiPhong('G008','Phòng nữ 8 người ở', 400000);
+
+CALL ThemLoaiPhong('TEST','Phòng nữ x người ở', 100000);

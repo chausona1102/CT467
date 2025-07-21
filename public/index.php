@@ -42,14 +42,24 @@ $router->get("/service_manage","App\controllers\ServiceControllers@renderService
 $router->get("/admin/service/create","App\controllers\ServiceControllers@addService");
 $router->get("/admin/service/edit/{id}","App\controllers\ServiceControllers@editService");
 $router->post("/admin/service/delete/{id}","App\controllers\ServiceControllers@deleteService");
+
 // Use service management routes
 $router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
+$router->get("/admin/use-service/create","App\controllers\UseServiceControllers@addUseService");
+$router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@editUseService");
+$router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@deleteUseService");
 
 // Bill management routes
 $router->get("/bill_manage","App\controllers\BillControllers@renderBill");
+$router->get("/admin/bill-manage/create","App\controllers\BillControllers@addBill");
+$router->get("/admin/bill-manage/edit/{id}","App\controllers\BillControllers@editBill");
+$router->post("/admin/bill-manage/delete/{id}","App\controllers\BillControllers@deleteBill");
+
 // Contract management routes
 $router->get("/contract_manage","App\controllers\ContractControllers@renderContract");
-
+$router->get("/admin/contract-manage/create","App\controllers\ContractControllers@addContract");
+$router->get("/admin/contract-manage/edit/{id}","App\controllers\ContractControllers@editContract");
+$router->post("/admin/contract-manage/delete/{id}","App\controllers\ContractControllers@deleteContract");
 // Statistical management routes
 $router->get("/statistical_manage","App\controllers\StatisticalControllers@renderStatistical");
 $router->run();
