@@ -34,6 +34,9 @@ $router->get("/filter_function","App\controllers\RoomControllers@filter_function
 
 // Room Type management routes
 $router->get("/room_type_manage","App\controllers\RoomTypeControllers@renderRoomType");
+$router->post("/room_type_manage/edit","App\controllers\RoomTypeControllers@edit");
+
+
 
 // Student management routes
 $router->get("/student_manage","App\controllers\StudentControllers@renderStudent");

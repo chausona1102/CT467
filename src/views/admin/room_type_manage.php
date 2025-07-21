@@ -69,7 +69,7 @@
         <!-- Modal edit-->
         <div class="modal fade" id="editRoomTypeModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
-                <form method="POST" action="/admin/room_type/edit">
+                <form method="POST" action="/room_type_manage/edit">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Sửa loại phòng</h5>
@@ -79,7 +79,7 @@
                             <input type="hidden" name="MaLoaiPhong" id="edit-id">
                             <div class="mb-3">
                                 <label for="edit-ten" class="form-label">Mã loại phòng</label>
-                                <input type="text" name="MaLoaiPhongMoi" id="edit-ten" class="form-control" required>
+                                <input type="text" name="MaLoaiPhongMoi" id="edit-ma" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="edit-ten" class="form-label">Tên loại phòng</label>
@@ -136,4 +136,5 @@
     data-bs-toggle=modal
     data-bs-target=#addRoomTypeModal
     > Thêm</a>
+    <script src="/js/roomtype.js"></script>
 <?php $this->stop(); ?>

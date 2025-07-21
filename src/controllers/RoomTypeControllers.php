@@ -27,6 +27,26 @@ class RoomTypeControllers extends Controller
             return null;
         }
     }
+    public function edit() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maphong     = $_POST['MaLoaiPhong'] ?? '';
+            $maphongmoi  = $_POST['MaLoaiPhongMoi'] ?? '';
+            $tenloai     = $_POST['TenLoaiPhong'] ?? '';
+            $gia         = $_POST['GiaThue'] ?? '';
 
+            if (!$maphong || !$maphongmoi || !$tenloai || !$gia) {
+                echo "<script>alert('Thiếu dữ liệu')</script>";
+                return;
+            }
+
+            $roomTypeMdl = new \App\models\RoomTypeModel();
+            $roomType = $roomTypeMdl->editRoomType($maphong, $maphongmoi, $tenloai, $gia);
+            if($roomType) {
+                header('Location: /room_type_manage');
+            }else {
+                echo "<script>alert('faild')</script>";
+            }
+        }
+    }
 }
 //     
