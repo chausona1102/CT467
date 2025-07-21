@@ -11,21 +11,39 @@
             </h2>
         </div>
         <div class="container my-4">
-            <form>
+            <h2 class="mb-4">Thêm dịch vụ mới</h2>
+
+            <?php if (!empty($errors)) : ?>
+                <div class="alert alert-danger">
+                    <?= is_array($errors) ? implode('<br>', $errors) : $errors ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($_SESSION['error'])) : ?>
+                <div class="alert alert-danger">
+                    <?= $_SESSION['error'] ?>
+                    <?php unset($_SESSION['error']); ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="/admin/service/store" method="POST">
                 <div class="mb-3">
                     <label class="form-label">Mã dịch vụ</label>
                     <input type="text" class="form-control" name="ma_dv" placeholder="DV001">
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Tên dịch vụ</label>
                     <input type="text" class="form-control" name="ten_dv" placeholder="Internet, Điện, Nước...">
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label">Đơn giá</label>
                     <input type="number" class="form-control" name="don_gia" placeholder="100000">
                 </div>
+
                 <button type="submit" class="btn btn-primary">Lưu</button>
-                <button type="reset" class="btn btn-secondary">Hủy</button>
+                <a href="/service_manage" class="btn btn-secondary">Hủy</a>
             </form>
         </div>
     </div>

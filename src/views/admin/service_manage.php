@@ -48,23 +48,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>DV01</td>
-                        <td>Điện</td>
-                        <td>3.000đ/kWh</td>
-                        <td class="text-center align-middle">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/service/edit/DV01" class="btn btn-xs btn-warning">
-                                    <i alt="Edit" class="fa fa-pencil"></i> Sửa
-                                </a>
-                                <form class="ms-2" action="/admin/service/delete/DV01" method="POST">
-                                    <button type="submit" class="btn btn-xs btn-danger" name="delete-service">
-                                        <i alt="Delete" class="fa fa-trash"></i> Xóa
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php foreach ($services as $service): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($service['MaDV']); ?></td>
+                            <td><?php echo htmlspecialchars($service['TenDV']); ?></td>
+                            <td><?php echo htmlspecialchars($service['DonGia']); ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="/admin/service/edit/<?php echo htmlspecialchars($service['MaDV']); ?>" class="btn btn-xs btn-warning">
+                                        <i alt="Edit" class="fa fa-pencil"></i> Sửa
+                                    </a>
+                                    <form class="ms-2" action="/admin/service/delete/<?php echo htmlspecialchars($service['MaDV']); ?>" method="POST">
+                                        <button type="submit" class="btn btn-xs btn-danger" name="delete-services">
+                                            <i alt="Delete" class="fa fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <!-- Table Ends Here -->
