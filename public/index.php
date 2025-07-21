@@ -32,6 +32,8 @@ $router->post("/logout", function() {
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
 $router->get("/filter_function","App\controllers\RoomControllers@filter_function");
 
+// Room Type management routes
+$router->get("/room_type_manage","App\controllers\RoomTypeControllers@renderRoomType");
 
 // Student management routes
 $router->get("/student_manage","App\controllers\StudentControllers@renderStudent");
