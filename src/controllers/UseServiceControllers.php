@@ -22,12 +22,18 @@ class UseServiceControllers extends Controller
 
     public function addUseService()
     {
-        // Code to add a new service usage
+        $data = [
+            // 'services' => $serviceMdl->select() // Example of fetching services for the form
+        ];
+        $this->render('admin/create_use_service', $data);
     }
     
     public function editUseService($id)
     {
-        // Code to edit an existing service usage by ID
+        $data = [
+            // 'services' => $serviceMdl->select() // Example of fetching services for the form
+        ];
+        $this->render('admin/edit_use_service', $data);
     }
 
     public function deleteUseService($id)

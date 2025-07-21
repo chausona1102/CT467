@@ -16,7 +16,7 @@
                 <?php unset($_SESSION['success_Mess']); ?>
             <?php endif; ?>
 
-            <a href="/admin/bill_manage/create" class="btn btn-success mb-3">
+            <a href="/admin/contract-manage/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 
@@ -38,7 +38,7 @@
             </div>
 
             <!-- Table Starts Here -->
-            <table id="bill" class="table table-striped table-bordered">
+            <table id="contract" class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Mã hợp đồng</th>
@@ -58,9 +58,14 @@
                         <td>2024-06-30</td>
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/bill_manage/edit/" class="btn btn-xs btn-warning">
-                                    <i alt="Edit" class="fa fa-pencil"></i> Kiểm tra
+                                <a href="/admin/contract-manage/edit/HD001" class="btn btn-xs btn-warning">
+                                    <i alt="Edit" class="fa fa-pencil"></i> Sửa
                                 </a>
+                                <form class="ms-2" action="/admin/contract-manage/delete/HD001" method="POST">
+                                    <button type="submit" class="btn btn-xs btn-danger" name="delete-contract">
+                                        <i alt="Delete" class="fa fa-trash"></i> Xóa
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -90,7 +95,7 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let table = new DataTable("#bill", {
+        let table = new DataTable("#contract", {
             responsive: true,
             pagingType: "simple_numbers",
             lengthChange: false,
@@ -105,7 +110,7 @@
             table.search(this.value).draw();
         });
 
-        const deleteButtons = document.querySelectorAll('button[name="delete-bill"]');
+        const deleteButtons = document.querySelectorAll('button[name="delete-contract"]');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
