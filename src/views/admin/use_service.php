@@ -103,7 +103,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        let table = new DataTable("#services", {
+        let table = new DataTable("#use-services", {
             responsive: true,
             pagingType: "simple_numbers",
             lengthChange: false,
@@ -126,15 +126,15 @@
         });
         let currentForm = null;
 
-        const deleteButtons = document.querySelectorAll('button[name="delete-services"]');
+        const deleteButtons = document.querySelectorAll('button[name="delete-use-service"]');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
 
                 currentForm = button.closest('form');
-                const nameTd = button.closest('tr').querySelector('td:nth-child(2)');
-                const tenDV = nameTd ? nameTd.textContent.trim() : "này";
-                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa dịch vụ "${tenDV}"?`;
+                const nameTd = button.closest('tr').querySelector('td:first-child');
+                const MaSDDV = nameTd ? nameTd.textContent.trim() : "này";
+                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa "${MaSDDV}"?`;
 
                 confirmModal.show();
             });

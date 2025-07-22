@@ -150,6 +150,8 @@ class UseServiceControllers extends Controller
 
     public function delete($id)
     {
-        // Code to delete a service usage by ID
+       $this->UseServiceModel->delete($id);
+        header('Location: /use_service');
+        exit;
     }
 }

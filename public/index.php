@@ -58,7 +58,7 @@ $router->get("/admin/use-service/create","App\controllers\UseServiceControllers@
 $router->post("/admin/use-service/store","App\controllers\UseServiceControllers@store");
 $router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@edit");
 $router->post("/admin/use-service/update/{id}","App\controllers\UseServiceControllers@update");
-$router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@deleteUseService");
+$router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@delete");
 
 // Bill management routes
 $router->get("/bill_manage","App\controllers\BillControllers@renderBill");
