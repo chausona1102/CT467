@@ -53,9 +53,11 @@ $router->post("/admin/service/update/{id}","App\controllers\ServiceControllers@u
 $router->post("/admin/service/delete/{id}","App\controllers\ServiceControllers@delete");
 
 // Use service management routes
-$router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
-$router->get("/admin/use-service/create","App\controllers\UseServiceControllers@addUseService");
-$router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@editUseService");
+$router->get("/use_service","App\controllers\UseServiceControllers@index");
+$router->get("/admin/use-service/create","App\controllers\UseServiceControllers@create");
+$router->post("/admin/use-service/store","App\controllers\UseServiceControllers@store");
+$router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@edit");
+$router->post("/admin/use-service/update/{id}","App\controllers\UseServiceControllers@update");
 $router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@deleteUseService");
 
 // Bill management routes

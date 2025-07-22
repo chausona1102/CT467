@@ -96,7 +96,7 @@ class ServiceControllers extends Controller
         $this->render('admin/edit_service', $data);
     }
 
-    public function update($id)
+    public function update()
     {
         $data = [
             'old_id' => $_POST['old_id'] ?? '',
