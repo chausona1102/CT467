@@ -12,6 +12,21 @@ class RoomTypeModel extends Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function filter_room_type($id)
+    {
+        $query = "SELECT * FROM {$this->table} WHERE 1=1";
+        $params = [];
+        if (!empty($id)) {
+            $query .= " AND MaLoaiPhong LIKE :id";
+            $params[':id'] = $id . '%';
+        }
+        $stmt = $this->conn->prepare($query);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function getRoomTypeById($id)
     {
@@ -34,6 +49,20 @@ class RoomTypeModel extends Model
         $stmt->bindParam(':newid', $newid, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':cost', $cost, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function add($id, $name, $cost)
+    {
+        $stmt = $this->conn->prepare("CALL ThemLoaiPhong(:id, :name, :cost); ");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':cost', $cost, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function delete($id)
+    {
+        $stmt = $this->conn->prepare("CALL XoaLoaiPhong(:id)");
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
         return $stmt->execute();
     }
 }

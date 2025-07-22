@@ -187,6 +187,17 @@ END//
 
 DELIMITER ;
 
+-- Procedure del row
+DELIMITER //
+
+CREATE PROCEDURE XoaLoaiPhong(
+    IN ma_loai VARCHAR(10)
+)
+BEGIN
+    DELETE FROM loaiphong
+    WHERE MaLoaiPhong = ma_loai;
+END//
+
 
 -- Phòng nam 
 CALL ThemLoaiPhong('B002','Phòng nam 2 người ở', 800000);

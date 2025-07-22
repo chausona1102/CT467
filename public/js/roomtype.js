@@ -9,3 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+const delLable = document.getElementById('del-label')
+const delModal = document.getElementById('delRoomTypeModal');
+delModal.addEventListener('show.bs.modal', event => {
+    const button = event.relatedTarget;
+    const id = button.getAttribute('data-id');
+    const input = delModal.querySelector('#del-id');
+    input.value = id;
+
+    delModal.querySelector('#del-id').value = id;
+    delLable.innerText += `${id}?`;
+});
+
