@@ -8,32 +8,26 @@
     <form action="/filter_function" class="d-flex flex-column align-items-center">
         <div class="row col-5 d-flex flex-row m-2">
             <div class="col" style="text-align: right;">
-                <label for="codeRoom">Mã phòng</label>
+                <label for="member">Loại phòng</label>
             </div>
             <div class="col-8">
-                <select name="codeRoom" id="codeRoom">
-                    <option value="">Chọn mã phòng</option>
-                    <option value="B00401">B00401</option>
-                    <option value="B00402">B00402</option>
-                    <option value="B00403">B00403</option>
-                    <option value="G00404">G00404</option>  
-                    <option value="G00405">G00405</option>
-                    <option value="G00406">G00406</option>
-                    <option value="G00407">G00407</option>
-                    <option value="G00408">G00408</option>
-                    ...
+                <select name="member" id="member" class="col-5">
+                    <option value="">Tất cả</option>
+                    <option value="2">2 người</option>
+                    <option value="4">4 người</option>
+                    <option value="8">8 người</option>
                 </select>
             </div>
         </div>
         <div class="row col-5 d-flex flex-row m-2">
             <div class="col" style="text-align: right;">
-                <label for="category">Loại phòng</label>
+                <label for="sex">Giới tính</label>
             </div>
             <div class="col-8">
-                <select name="category" id="category">
-                    <option value="">Chọn loại phòng</option>
-                    <option value="1">Nam</option>
-                    <option value="0">Nữ</option>
+                <select name="sex" id="sex" class="col-5">
+                    <option value="">Tất cả</option>
+                    <option value="nam">Nam</option>
+                    <option value="nữ">Nữ</option>
                 </select>
             </div>
         </div>
@@ -42,8 +36,8 @@
                 <label for="status">Tình trạng phòng</label>
             </div>
             <div class="col-8">
-                <select name="status" id="status">
-                    <option value="">Chọn tình trạng phòng</option>
+                <select name="status" id="status" class="col-5">
+                    <option value="">Tất cả</option>
                     <option value="1">Trống</option>
                     <option value="0">Đầy</option>
                 </select>
@@ -69,10 +63,26 @@
         </thead>
         <tbody>
             <?php 
-                if(isset($filter_result)) {
-
+                if(isset($filter_result) && !empty($filter_result)) {
+                    foreach ($filter_result as $row) {
+                        $tinhtrang = $row['TinhTrang'] ? 'Trống' : 'Đầy';
+                        echo "
+                            <tr>
+                                <td>{$row['MaPhong']}</td>
+                                <td>{$row['MaLoaiPhong']}</td>
+                                <td>{$row['SoPhong']}</td>
+                                <td>{$row['SoLuongToiDa']}</td>
+                                <td>{$row['SoLuongHienTai']}</td>
+                                <td>{$row['GioiTinh']}</td>
+                                <td>{$tinhtrang}</td>
+                                <td>
+                                    <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
+                                    <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
+                                </td>
+                            </tr>
+                        ";
+                    }
                 }else if(isset($roomsL10)) {
-                    // print_r($roomsL10[1]);
                     foreach ($roomsL10 as $room) {
                         echo "
                             <tr>

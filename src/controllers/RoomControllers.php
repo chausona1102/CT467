@@ -38,15 +38,20 @@ class RoomControllers extends Controller
     public function filter_function() {
         // Logic to filter rooms based on criteria
         // This could involve fetching filtered data from a database
-        $codeRoom = $_GET['codeRoom'] ?? '';
-        $category = $_GET['category'] ?? '';
-        $status = $_GET['status'] ?? '';
-
-        $roomMdl = new \App\models\RoomModel();
-        $filteredRooms = $roomMdl->filter($codeRoom, $category, $status);
-        $data = [
-            'filter_result' => $filteredRooms
-        ];
-        $this->render('admin/room_manage', $data);
+        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $member = $_GET['member'] ?? '';
+            $sex = $_GET['sex'] ?? '';
+            $status = $_GET['status'] ?? '';
+    
+            $roomMdl = new \App\models\RoomModel();
+            $filter_result= $roomMdl->filter($member, $sex, $status);
+            $data = [
+                'filter_result' => $filter_result
+            ];
+            $this->render('admin/room_manage', $data);
+        }else {
+            echo "<script>alert('Lỗi method')</script>";
+            return;
+        }
     }
 }

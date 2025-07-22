@@ -44,26 +44,21 @@ class RoomModel extends Model
         $stmt->bindParam(':status', $data['status']);
         return $stmt->execute();
     }
-    public function filter($codeRoom, $category, $status)
+    public function filter($member, $sex, $status)
     {
         $query = "SELECT * FROM phong WHERE 1=1";
         $params = [];
 
-        if ($codeRoom) {
-            $query .= " AND maphong = :codeRoom";
-            $params[':codeRoom'] = $codeRoom;
+        if ($member) {
+            $query .= " AND SoLuongToiDa = :member";
+            $params[':member'] = $member;
         }
-        if ($category) {
-            $query .= " AND gioitinh like :category";
-            if($category == 1) {
-                $category = 'Nam';
-            } else if($category == 0) {
-                $category = 'Nữ';
-            }
-            $params[':category'] = $category;
+        if ($sex) {
+            $query .= " AND GioiTinh like :sex";
+            $params[':sex'] = $sex;
         }
         if ($status) {
-            $query .= " AND status = :status";
+            $query .= " AND TinhTrang = :status";
             $params[':status'] = $status;
         }
 
