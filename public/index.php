@@ -49,6 +49,7 @@ $router->get("/service_manage","App\controllers\ServiceControllers@index");
 $router->get("/admin/service/create","App\controllers\ServiceControllers@create");
 $router->post("/admin/service/store","App\controllers\ServiceControllers@store");
 $router->get("/admin/service/edit/{id}","App\controllers\ServiceControllers@edit");
+$router->post("/admin/service/update/{id}","App\controllers\ServiceControllers@update");
 $router->post("/admin/service/delete/{id}","App\controllers\ServiceControllers@delete");
 
 // Use service management routes

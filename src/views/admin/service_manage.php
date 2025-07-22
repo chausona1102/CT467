@@ -2,6 +2,7 @@
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/room_manage.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <?php $this->stop(); ?>
 <?php $this->start("page-content"); ?>
 <div class="container">
@@ -18,6 +19,9 @@
 
             <a href="/admin/service/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Tạo thêm
+            </a>
+            <a href="/service_manage?export=excel" class="btn btn-success mb-3">
+                <i class="fas fa-plus-circle"></i> Print Excel
             </a>
 
             <div class="d-flex justify-content-between mb-3">
@@ -69,7 +73,6 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- Table Ends Here -->
         </div>
     </div>
     <div id="delete-confirm" class="modal fade" tabindex="-1">
@@ -80,7 +83,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p class="lead">Are you sure you want to delete this brand?</p>
+                    <p class="lead"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancel</button>
@@ -91,13 +94,17 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let table = new DataTable("#services", {
             responsive: true,
             pagingType: "simple_numbers",
             lengthChange: false,
-            searching: true
+            searching: true,
+            dom: 'lrtip'
         });
 
         document.getElementById("entries-per-page").addEventListener("change", function() {
@@ -108,34 +115,29 @@
             table.search(this.value).draw();
         });
 
+        const modalEl = document.getElementById('delete-confirm');
+        const confirmModal = new bootstrap.Modal(modalEl, {
+            backdrop: 'static',
+            keyboard: false
+        });
+        let currentForm = null;
+
         const deleteButtons = document.querySelectorAll('button[name="delete-services"]');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                const form = button.closest('form');
-                const nameTd = button.closest('tr').querySelector('td:nth-child(3)');
-                if (nameTd) {
-                    document.querySelector('.modal-body p').textContent =
-                        `Do you want to delete "${nameTd.textContent}"?`;
-                }
-                const submitForm = function() {
-                    form.submit();
-                };
-                document.getElementById('delete').addEventListener('click', submitForm, {
-                    once: true
-                });
 
-                const modalEl = document.getElementById('delete-confirm');
-                modalEl.addEventListener('hidden.bs.modal', function() {
-                    document.getElementById('delete').removeEventListener('click', submitForm);
-                });
+                currentForm = button.closest('form');
+                const nameTd = button.closest('tr').querySelector('td:nth-child(2)');
+                const tenDV = nameTd ? nameTd.textContent.trim() : "này";
+                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa dịch vụ "${tenDV}"?`;
 
-                const confirmModal = new bootstrap.Modal(modalEl, {
-                    backdrop: 'static',
-                    keyboard: false
-                });
                 confirmModal.show();
             });
+        });
+
+        document.getElementById('delete').addEventListener('click', function() {
+            if (currentForm) currentForm.submit();
         });
     });
 </script>
