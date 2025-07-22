@@ -12,8 +12,9 @@ class RoomControllers extends Controller
             // 'rooms' => $roomMdl->select() // Example of fetching rooms
         ];
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
-            // $roomMdl = new \App\models\RoomModel();
-            // $data['rooms'] = $roomMdl->select();
+            $roomMdl = new \App\models\RoomModel();
+            $n = 10;
+            $data['roomsL10'] = $roomMdl->selectLimit($n);
         } else {
             header('Location: /login');
             exit();

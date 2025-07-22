@@ -3,9 +3,17 @@ namespace App\models;
 use PDO;
 class RoomModel extends Model
 {
+    protected $table = 'phong';
     public function select()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM rooms");
+        $stmt = $this->conn->prepare("SELECT * FROM {$this->table}");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function selectLimit($n)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM {$this->table} LIMIT :n");
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

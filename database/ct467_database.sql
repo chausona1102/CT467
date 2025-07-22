@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS Phong (
     FOREIGN KEY (MaLoaiPhong) REFERENCES LoaiPhong(MaLoaiPhong)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+
 -- 4. Bảng Sinh Viên
 CREATE TABLE IF NOT EXISTS SinhVien (
     MaSV VARCHAR(10) PRIMARY KEY,
@@ -197,6 +199,24 @@ BEGIN
     DELETE FROM loaiphong
     WHERE MaLoaiPhong = ma_loai;
 END//
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE ThemPhong(
+    IN ma_phong VARCHAR(10),
+    IN ma_loai_phong varchar(10),
+    IN so_phong int,
+    IN gioi_tinh varchar(5),
+    IN so_luong_toi_da int,
+    IN so_luong_hien_tai int,
+    In tinh_trang tinyint
+)
+BEGIN
+    INSERT INTO Phong(MaPhong, MaLoaiPhong, SoPhong, GioiTinh, SoLuongToiDa, SoLuongHienTai, TinhTrang)
+    VALUES (ma_phong, ma_loai_phong, so_phong, gioi_tinh, so_luong_toi_da, so_luong_hien_tai, tinh_trang);
+END//
+DELIMITER ;
 
 
 -- Phòng nam 
@@ -209,3 +229,44 @@ CALL ThemLoaiPhong('G004','Phòng nữ 4 người ở', 600000);
 CALL ThemLoaiPhong('G008','Phòng nữ 8 người ở', 400000);
 
 CALL ThemLoaiPhong('TEST','Phòng nữ x người ở', 100000);
+
+-- Thêm phòng
+-- B002
+CALL ThemPhong('B00201', 'B002', 1, 'nam', 2, 0, 1);
+CALL ThemPhong('B00202', 'B002', 2, 'nam', 2, 0, 1);
+CALL ThemPhong('B00203', 'B002', 3, 'nam', 2, 0, 1);
+CALL ThemPhong('B00204', 'B002', 4, 'nam', 2, 0, 1);
+
+-- B004
+CALL ThemPhong('B00401', 'B004', 1, 'nam', 4, 0, 1);
+CALL ThemPhong('B00402', 'B004', 2, 'nam', 4, 0, 1);
+CALL ThemPhong('B00403', 'B004', 3, 'nam', 4, 0, 1);
+CALL ThemPhong('B00404', 'B004', 4, 'nam', 4, 0, 1);
+
+-- B008
+CALL ThemPhong('B00801', 'B008', 1, 'nam', 8, 0, 1);
+CALL ThemPhong('B00802', 'B008', 2, 'nam', 8, 0, 1);
+CALL ThemPhong('B00803', 'B008', 3, 'nam', 8, 0, 1);
+CALL ThemPhong('B00804', 'B008', 4, 'nam', 8, 0, 1);
+
+-- G002
+CALL ThemPhong('G00201', 'G002', 1, 'nữ', 2, 0, 1);
+CALL ThemPhong('G00202', 'G002', 2, 'nữ', 2, 0, 1);
+CALL ThemPhong('G00203', 'G002', 3, 'nữ', 2, 0, 1);
+CALL ThemPhong('G00204', 'G002', 4, 'nữ', 2, 0, 1);
+
+-- G004
+CALL ThemPhong('G00401', 'G004', 1, 'nữ', 4, 0, 1);
+CALL ThemPhong('G00402', 'G004', 2, 'nữ', 4, 0, 1);
+CALL ThemPhong('G00403', 'G004', 3, 'nữ', 4, 0, 1);
+CALL ThemPhong('G00404', 'G004', 4, 'nữ', 4, 0, 1);
+
+-- G008
+CALL ThemPhong('G00801', 'G008', 1, 'nữ', 8, 0, 1);
+CALL ThemPhong('G00802', 'G008', 2, 'nữ', 8, 0, 1);
+CALL ThemPhong('G00803', 'G008', 3, 'nữ', 8, 0, 1);
+CALL ThemPhong('G00804', 'G008', 4, 'nữ', 8, 0, 1);
+
+
+
+

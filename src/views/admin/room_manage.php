@@ -1,4 +1,4 @@
-<?php $this->layout('layout-admin', ['filter_result' => $filter_result]); ?>
+<?php $this->layout('layout-admin', ['roomsL10' => $roomsL10 , 'filter_result' => $filter_result]); ?>
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/room_manage.css">
@@ -62,24 +62,36 @@
                 <th scope="col">Số phòng</th>
                 <th scope="col">Số lượng tối đa</th>
                 <th scope="col">Số lượng hiện tại</th>
+                <th scope="col">Loại phòng</th>
                 <th scope="col">Tình trạng phòng</th>
                 <th scope="col">Hành động</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Example row, replace with dynamic data -->
-            <!-- <tr>
-                <td>01</td>
-                <td>B004</td>
-                <td>1</td>
-                <td>4</td>
-                <td>2</td>
-                <td>Trống</td>
-                <td>
-                    <a href="/edit_room/1" class="btn btn-warning">Xem thành viên</a>
-                    <a href="/delete_room/1" class="btn btn-danger">Giải phóng</a>
-                </td>
-            </tr> -->
+            <?php 
+                if(isset($filter_result)) {
+
+                }else if(isset($roomsL10)) {
+                    // print_r($roomsL10[1]);
+                    foreach ($roomsL10 as $room) {
+                        echo "
+                            <tr>
+                                <td>{$room['MaPhong']}</td>
+                                <td>{$room['MaLoaiPhong']}</td>
+                                <td>{$room['SoPhong']}</td>
+                                <td>{$room['SoLuongToiDa']}</td>
+                                <td>{$room['SoLuongHienTai']}</td>
+                                <td>{$room['GioiTinh']}</td>
+                                <td>{$room['TinhTrang']}</td>
+                                <td>
+                                    <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
+                                    <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
+                                </td>
+                            </tr>
+                        ";
+                    }
+                }
+            ?>
         </tbody>
 </div>
 <?php $this->stop(); ?>
