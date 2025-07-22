@@ -15,7 +15,7 @@ class UseServiceModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getUseServiceById()
+    public function getUseServiceById($id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM SuDungDV WHERE MaSDDV = :MaSDDV");
         $stmt->bindParam(':MaSDDV', $id, PDO::PARAM_STR);
@@ -46,7 +46,7 @@ class UseServiceModel extends Model
     public function update($data): bool
     {
         $stmt = $this->conn->prepare("
-        UPDATE DichVu
+        UPDATE SuDungDV
         SET 
             MaSDDV = :MaSDDV,
             MaHD = :MaHD,
