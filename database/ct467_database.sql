@@ -2,9 +2,6 @@
 CREATE DATABASE IF NOT EXISTS ct467_database;
 USE ct467_database;
 
--- Đặt chế độ cho phép CHECK hoạt động
-SET sql_mode = '';
-
 -- 1. Bảng account
 CREATE TABLE IF NOT EXISTS account (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -13,7 +10,6 @@ CREATE TABLE IF NOT EXISTS account (
     type_account ENUM('admin', 'guest') DEFAULT 'guest',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- 2. Bảng Loại Phòng
 CREATE TABLE IF NOT EXISTS LoaiPhong (
     MaLoaiPhong VARCHAR(10) PRIMARY KEY,
@@ -31,9 +27,8 @@ CREATE TABLE IF NOT EXISTS Phong (
     SoLuongHienTai INT DEFAULT 0,
     TinhTrang TINYINT(1) CHECK (TinhTrang IN (1, 0)), -- 1: Trống, 0: Đầy
     FOREIGN KEY (MaLoaiPhong) REFERENCES LoaiPhong(MaLoaiPhong)
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
 
 -- 4. Bảng Sinh Viên
 CREATE TABLE IF NOT EXISTS SinhVien (
@@ -50,8 +45,10 @@ CREATE TABLE IF NOT EXISTS HopDong (
     MaPhong VARCHAR(10),
     NgayBatDau DATE,
     NgayKetThuc DATE,
-    FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV),
+    FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV)
+        ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong)
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 6. Bảng Dịch Vụ
@@ -69,8 +66,10 @@ CREATE TABLE IF NOT EXISTS SuDungDV (
     SoLuongSuDung INT,
     Thang INT CHECK (Thang BETWEEN 1 AND 12),
     Nam INT,
-    FOREIGN KEY (MaHD) REFERENCES HopDong(MaHD),
+    FOREIGN KEY (MaHD) REFERENCES HopDong(MaHD)
+        ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (MaDV) REFERENCES DichVu(MaDV)
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 8. Bảng Hóa Đơn
@@ -82,6 +81,7 @@ CREATE TABLE IF NOT EXISTS HoaDon (
     TongTien DECIMAL(12,2),
     TrangThai TINYINT(1) CHECK (TrangThai IN (0, 1)), -- 0: Chưa thanh toán, 1: Đã thanh toán
     FOREIGN KEY (MaSDDV) REFERENCES SuDungDV(MaSDDV)
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =========================
