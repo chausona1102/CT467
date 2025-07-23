@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS account (
     type_account ENUM('admin', 'guest') DEFAULT 'guest',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- 2. Bảng Loại Phòng
 CREATE TABLE IF NOT EXISTS LoaiPhong (
     MaLoaiPhong VARCHAR(10) PRIMARY KEY,
@@ -79,11 +80,17 @@ CREATE TABLE IF NOT EXISTS HoaDon (
     NgayLap DATE,
     NgayHetHan DATE,
     TongTien DECIMAL(12,2),
-    TrangThai TINYINT(1) CHECK (TrangThai IN (0, 1)), -- 0: Chưa thanh toán, 1: Đã thanh toán
+    TrangThai ENUM('1', '0') DEFAULT '0', -- 1:  Đã thanh toán, 0: Chưa thanh toán
     FOREIGN KEY (MaSDDV) REFERENCES SuDungDV(MaSDDV)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+select * from HoaDon;
+INSERT INTO HoaDon (MaHoaDon, MaSDDV, NgayLap, NgayHetHan, TrangThai)
+VALUES ('HD01', 'SD01', '2025-07-23', '2025-08-23', 0);
+SELECT * FROM SuDungDV WHERE MaSDDV = 'SD01';
+SELECT * FROM LoaiPhong;
+SELECT * FROM Phong;
 -- =========================
 -- Tạo FUNCTION kiểm tra quá hạn
 -- =========================
@@ -232,6 +239,37 @@ BEGIN
     VALUES(ma_sv, ho_ten, gioi_tinh, sdt);
 END
 //
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE TRIGGER tinh_tong_tien_day_du
+BEFORE INSERT ON HoaDon
+FOR EACH ROW
+BEGIN
+    DECLARE soLuong INT;
+    DECLARE donGia DECIMAL(10,2);
+    DECLARE giaPhong DECIMAL(10,2);
+
+    -- Lấy số lượng dịch vụ và đơn giá
+    SELECT sd.SoLuongSuDung, dv.DonGia
+    INTO soLuong, donGia
+    FROM SuDungDV sd
+    JOIN DichVu dv ON sd.MaDV = dv.MaDV
+    WHERE sd.MaSDDV = NEW.MaSDDV;
+
+    -- Lấy giá thuê phòng từ loại phòng qua hợp đồng
+    SELECT lp.GiaThue
+    INTO giaPhong
+    FROM SuDungDV sd
+    JOIN HopDong hd ON sd.MaHD = hd.MaHD
+    JOIN Phong p ON hd.MaPhong = p.MaPhong
+    JOIN LoaiPhong lp ON p.MaLoaiPhong = lp.MaLoaiPhong
+    WHERE sd.MaSDDV = NEW.MaSDDV;
+
+    -- Gán tổng tiền
+    SET NEW.TongTien = giaPhong + (soLuong * donGia);
+END$$
 DELIMITER ;
 
 
@@ -386,4 +424,5 @@ CALL ThemSinhVien('B2000097', 'Vũ Thị Oanh', 'Nữ', '0912345097');
 CALL ThemSinhVien('C2000098', 'Bùi Thị Kim', 'Nữ', '0912345098');
 CALL ThemSinhVien('B2000099', 'Đặng Thị Hoa', 'Nữ', '0912345099');
 CALL ThemSinhVien('C2000100', 'Nguyễn Thị Ánh', 'Nữ', '0912345100'); 
+
 
