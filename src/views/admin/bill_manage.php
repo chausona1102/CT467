@@ -1,7 +1,7 @@
 <?php $this->layout('layout-admin'); ?>
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
-<link rel="stylesheet" href="/css/room_manage.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <?php $this->stop(); ?>
 <?php $this->start("page-content"); ?>
 <div class="container">
@@ -17,7 +17,10 @@
             <?php endif; ?>
 
             <a href="/admin/bill-manage/create" class="btn btn-success mb-3">
-                <i class="fas fa-plus-circle"></i> Tạo thêm
+                <i class="fas fa-plus-circle"></i> Tạo mới
+            </a>
+            <a href="/bill_manage?export=excel" class="btn btn-success mb-3">
+                <i class="fas fa-plus-circle"></i> Print Excel
             </a>
 
             <div class="d-flex justify-content-between mb-3">
@@ -36,7 +39,6 @@
                     <input type="text" id="custom-search" class="form-control form-control-sm" placeholder="Search...">
                 </div>
             </div>
-
             <!-- Table Starts Here -->
             <table id="bill" class="table table-striped table-bordered">
                 <thead>
@@ -51,29 +53,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>HD001</td>
-                        <td>SDDV01</td>
-                        <td>2024-06-01</td>
-                        <td>2024-06-30</td>
-                        <td>1.500.000₫</td>
-                        <td><span class="badge bg-danger">Chưa thanh toán</span></td>
-                        <td class="text-center align-middle">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/bill-manage/edit/HD001" class="btn btn-xs btn-warning">
-                                    <i alt="Edit" class="fa fa-pencil"></i> Sửa
-                                </a>
-                                <form class="ms-2" action="/admin/bill-manage/delete/HD001" method="POST">
-                                    <button type="submit" class="btn btn-xs btn-danger" name="delete-service">
-                                        <i alt="Delete" class="fa fa-trash"></i> Xóa
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php foreach ($bill as $bill): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($bill['MaHoaDon']); ?></td>
+                            <td><?php echo htmlspecialchars($bill['MaSDDV']); ?></td>
+                            <td><?php echo htmlspecialchars($bill['NgayLap']); ?></td>
+                            <td><?php echo htmlspecialchars($bill['NgayHetHan']); ?></td>
+                            <td><?php echo htmlspecialchars($bill['TongTien']); ?></td>
+                            <td>
+                                <?php if ($bill['TrangThai'] === '0'): ?>
+                                    <span class="badge bg-danger">Chưa thanh toán</span>
+                                <?php elseif ($bill['TrangThai'] === '1'): ?>
+                                    <span class="badge bg-success">Đã thanh toán</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="/admin/bill-manage/edit/<?php echo htmlspecialchars($bill['MaHoaDon']); ?>" class="btn btn-xs btn-warning">
+                                        <i alt="Edit" class="fa fa-pencil"></i> Sửa
+                                    </a>
+                                    <form class="ms-2" action="/admin/bill-manage/delete/<?php echo htmlspecialchars($bill['MaHoaDon']); ?>" method="POST">
+                                        <button type="submit" class="btn btn-xs btn-danger" name="delete-bill">
+                                            <i alt="Delete" class="fa fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- Table Ends Here -->
         </div>
     </div>
     <div id="delete-confirm" class="modal fade" tabindex="-1">
@@ -84,7 +93,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p class="lead">Are you sure you want to delete this service?</p>
+                    <p class="lead"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancel</button>
@@ -95,13 +104,17 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let table = new DataTable("#bill", {
             responsive: true,
             pagingType: "simple_numbers",
             lengthChange: false,
-            searching: true
+            searching: true,
+            dom: 'lrtip'
         });
 
         document.getElementById("entries-per-page").addEventListener("change", function() {
@@ -112,34 +125,29 @@
             table.search(this.value).draw();
         });
 
+        const modalEl = document.getElementById('delete-confirm');
+        const confirmModal = new bootstrap.Modal(modalEl, {
+            backdrop: 'static',
+            keyboard: false
+        });
+        let currentForm = null;
+
         const deleteButtons = document.querySelectorAll('button[name="delete-bill"]');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                const form = button.closest('form');
-                const nameTd = button.closest('tr').querySelector('td:nth-child(3)');
-                if (nameTd) {
-                    document.querySelector('.modal-body p').textContent =
-                        `Do you want to delete "${nameTd.textContent}"?`;
-                }
-                const submitForm = function() {
-                    form.submit();
-                };
-                document.getElementById('delete').addEventListener('click', submitForm, {
-                    once: true
-                });
 
-                const modalEl = document.getElementById('delete-confirm');
-                modalEl.addEventListener('hidden.bs.modal', function() {
-                    document.getElementById('delete').removeEventListener('click', submitForm);
-                });
+                currentForm = button.closest('form');
+                const nameTd = button.closest('tr').querySelector('td:first-child');
+                const MaHD = nameTd ? nameTd.textContent.trim() : "này";
+                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa hóa đơn "${MaHD}"?`;
 
-                const confirmModal = new bootstrap.Modal(modalEl, {
-                    backdrop: 'static',
-                    keyboard: false
-                });
                 confirmModal.show();
             });
+        });
+
+        document.getElementById('delete').addEventListener('click', function() {
+            if (currentForm) currentForm.submit();
         });
     });
 </script>

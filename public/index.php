@@ -61,10 +61,12 @@ $router->post("/admin/use-service/update/{id}","App\controllers\UseServiceContro
 $router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@delete");
 
 // Bill management routes
-$router->get("/bill_manage","App\controllers\BillControllers@renderBill");
-$router->get("/admin/bill-manage/create","App\controllers\BillControllers@addBill");
-$router->get("/admin/bill-manage/edit/{id}","App\controllers\BillControllers@editBill");
-$router->post("/admin/bill-manage/delete/{id}","App\controllers\BillControllers@deleteBill");
+$router->get("/bill_manage","App\controllers\BillControllers@index");
+$router->get("/admin/bill-manage/create","App\controllers\BillControllers@create");
+$router->post("/admin/bill-manage/store","App\controllers\BillControllers@store");
+$router->get("/admin/bill-manage/edit/{id}","App\controllers\BillControllers@edit");
+$router->post("/admin/bill-manage/update/{id}","App\controllers\BillControllers@update");
+$router->post("/admin/bill-manage/delete/{id}","App\controllers\BillControllers@delete");
 
 // Contract management routes
 $router->get("/contract_manage","App\controllers\ContractControllers@renderContract");
