@@ -43,6 +43,11 @@ $router->post("/room_type_manage/delete","App\controllers\RoomTypeControllers@de
 // Student management routes
 $router->get("/student_manage","App\controllers\StudentControllers@renderStudent");
 $router->get("/filter_student","App\controllers\StudentControllers@filter_student");
+$router->post("/student_manage/add", "App\controllers\StudentControllers@addStudent");
+$router->post("/student_manage/delete", "App\controllers\StudentControllers@deleleStudent");
+$router->post("/student_manage/edit", "App\controllers\StudentControllers@editStudent");
+
+
 
 // service management routes
 $router->get("/service_manage","App\controllers\ServiceControllers@index");

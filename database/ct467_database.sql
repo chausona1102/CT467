@@ -234,6 +234,36 @@ END
 //
 DELIMITER ;
 
+-- Procedure del row
+DELIMITER //
+
+CREATE PROCEDURE XoaSinhVien(
+    IN ma_sv VARCHAR(10)
+)
+BEGIN
+    DELETE FROM SinhVien
+    WHERE MaSV like ma_sv;
+END//
+DELIMITER ;
+
+
+
+-- Procedure edit row
+DELIMITER //
+CREATE PROCEDURE CapNhatSinhVien(
+		IN old_ma varchar(10),
+		IN ma_sv varchar(10),
+        IN ho_ten varchar(100),
+        IN gioi_tinh varchar(5),
+        IN sdt varchar(15)
+)
+BEGIN
+	UPDATE SinhVien
+    SET MaSV = ma_sv, HoTen = ho_ten, GioiTinh = gioi_tinh, SoDienThoai = sdt
+    WHERE MaSV = old_ma;
+END
+//
+DELIMITER ; 
 
 -- Phòng nam 
 CALL ThemLoaiPhong('B002','Phòng nam 2 người ở', 800000);

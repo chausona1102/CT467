@@ -18,7 +18,7 @@ delModal.addEventListener('show.bs.modal', event => {
     const input = delModal.querySelector('#del-id');
     input.value = id;
 
-    delModal.querySelector('#del-id').value = id;
-    delLable.innerText += `${id}?`;
+    // delModal.querySelector('#del-id').value = id;
+    delLable.innerHTML = `<label>Chắc chắn xóa <span style="color: red;">${id}</span></label>`;
 });
 
