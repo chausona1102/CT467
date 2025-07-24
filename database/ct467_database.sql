@@ -273,32 +273,44 @@ END
 DELIMITER ; 
 
 DELIMITER $$
-CREATE TRIGGER tinh_tong_tien_day_du
+CREATE TRIGGER tinh_tong_tien_dich_vu
 BEFORE INSERT ON HoaDon
 FOR EACH ROW
 BEGIN
     DECLARE soLuong INT;
     DECLARE donGia DECIMAL(10,2);
-    DECLARE giaPhong DECIMAL(10,2);
 
-    -- Lấy số lượng dịch vụ và đơn giá
+    -- Lấy số lượng dịch vụ và đơn giá từ MaSDDV được chọn
     SELECT sd.SoLuongSuDung, dv.DonGia
     INTO soLuong, donGia
     FROM SuDungDV sd
     JOIN DichVu dv ON sd.MaDV = dv.MaDV
     WHERE sd.MaSDDV = NEW.MaSDDV;
 
-    -- Lấy giá thuê phòng từ loại phòng qua hợp đồng
-    SELECT lp.GiaThue
-    INTO giaPhong
+    -- Gán tổng tiền = số lượng * đơn giá
+    SET NEW.TongTien = (soLuong * donGia);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER cap_nhat_tong_tien
+AFTER UPDATE ON SuDungDV
+FOR EACH ROW
+BEGIN
+    DECLARE soLuong INT;
+    DECLARE donGia DECIMAL(10,2);
+
+    -- Lấy lại số lượng và đơn giá mới
+    SELECT SoLuongSuDung, dv.DonGia
+    INTO soLuong, donGia
     FROM SuDungDV sd
-    JOIN HopDong hd ON sd.MaHD = hd.MaHD
-    JOIN Phong p ON hd.MaPhong = p.MaPhong
-    JOIN LoaiPhong lp ON p.MaLoaiPhong = lp.MaLoaiPhong
+    JOIN DichVu dv ON sd.MaDV = dv.MaDV
     WHERE sd.MaSDDV = NEW.MaSDDV;
 
-    -- Gán tổng tiền
-    SET NEW.TongTien = giaPhong + (soLuong * donGia);
+    -- Cập nhật tổng tiền trong bảng HoaDon
+    UPDATE HoaDon
+    SET TongTien = soLuong * donGia
+    WHERE MaSDDV = NEW.MaSDDV;
 END$$
 DELIMITER ;
 

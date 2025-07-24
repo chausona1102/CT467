@@ -52,8 +52,7 @@
                     <select class="form-select js-select2" name="MaHD">
                         <option value="">-- Chọn hợp đồng --</option>
                         <?php foreach ($maHDList as $maHD): ?>
-                            <option value="<?= $maHD['MaHD'] ?>"
-                                <?= ($useService['MaHD'] ?? '') === $maHD['MaHD'] ? 'selected' : '' ?>>
+                            <option value="<?= $maHD['MaHD'] ?>">
                                 <?= $maHD['MaHD'] ?>
                             </option>
                         <?php endforeach; ?>
@@ -64,9 +63,8 @@
                     <select class="form-select js-select2" name="MaDV">
                         <option value="">-- Chọn dịch vụ --</option>
                         <?php foreach ($maDVList as $maDV): ?>
-                            <option value="<?= $maDV['MaDV'] ?>"
-                                <?= ($useService['MaDV'] ?? '') === $maDV['MaDV'] ? 'selected' : '' ?>>
-                                <?= $maDV['MaDV'] ?>
+                            <option value="<?= $maDV['MaDV'] ?>">
+                                <?= $maDV['MaDV'] ?> - <?= $maDV['TenDV'] ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
