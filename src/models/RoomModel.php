@@ -57,7 +57,7 @@ class RoomModel extends Model
             $query .= " AND GioiTinh like :sex";
             $params[':sex'] = $sex;
         }
-        if ($status) {
+        if ($status !== null && $status !== '') {
             $query .= " AND TinhTrang = :status";
             $params[':status'] = $status;
         }

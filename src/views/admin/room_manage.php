@@ -63,23 +63,31 @@
         </thead>
         <tbody>
             <?php 
-                if(isset($filter_result) && !empty($filter_result)) {
-                    foreach ($filter_result as $row) {
-                        $tinhtrang = $row['TinhTrang'] ? 'Trống' : 'Đầy';
+                if(isset($filter_result)) {
+                    if(!empty($filter_result)) {
+                        foreach ($filter_result as $row) {
+                            $tinhtrang = $row['TinhTrang'] ? 'Trống' : 'Đầy';
+                            echo "
+                                <tr>
+                                    <td>{$row['MaPhong']}</td>
+                                    <td>{$row['MaLoaiPhong']}</td>
+                                    <td>{$row['SoPhong']}</td>
+                                    <td>{$row['SoLuongToiDa']}</td>
+                                    <td>{$row['SoLuongHienTai']}</td>
+                                    <td>{$row['GioiTinh']}</td>
+                                    <td>{$tinhtrang}</td>
+                                    <td>
+                                        <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
+                                        <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
+                                    </td>
+                                </tr>
+                            ";
+                        }
+                    } else {
                         echo "
-                            <tr>
-                                <td>{$row['MaPhong']}</td>
-                                <td>{$row['MaLoaiPhong']}</td>
-                                <td>{$row['SoPhong']}</td>
-                                <td>{$row['SoLuongToiDa']}</td>
-                                <td>{$row['SoLuongHienTai']}</td>
-                                <td>{$row['GioiTinh']}</td>
-                                <td>{$tinhtrang}</td>
-                                <td>
-                                    <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
-                                    <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
-                                </td>
-                            </tr>
+                                <h3>
+                                    Không tìm thấy kết quả
+                                </h3>
                         ";
                     }
                 }else if(isset($roomsL10)) {
@@ -103,5 +111,6 @@
                 }
             ?>
         </tbody>
+        </table>
 </div>
 <?php $this->stop(); ?>
