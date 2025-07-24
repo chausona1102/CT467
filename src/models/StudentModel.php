@@ -13,7 +13,7 @@
         }
         public function n_select($n)
         {
-            $stmt = $this->conn->prepare("SELECT * FROM SinhVien GROUP BY MaSV ASC LIMIT :n ");
+            $stmt = $this->conn->prepare("SELECT * FROM SinhVien ORDER BY MaSV ASC LIMIT :n ");
             $stmt->bindParam(":n", $n, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
