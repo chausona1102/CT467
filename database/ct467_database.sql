@@ -88,32 +88,32 @@ CREATE TABLE IF NOT EXISTS HoaDon (
 -- =========================
 -- Tạo FUNCTION kiểm tra quá hạn
 -- =========================
-DROP FUNCTION IF EXISTS KiemTraQuaHan;
-
-DELIMITER //
-CREATE FUNCTION KiemTraQuaHan(MaSinhVien VARCHAR(10))
-RETURNS TINYINT(1)
+DELIMITER $$
+CREATE FUNCTION KiemTraQuaHan(maSV_input VARCHAR(10))
+RETURNS INT
 DETERMINISTIC
 BEGIN
-    DECLARE NgayKetThuc DATE;
+    DECLARE hanCuoi DATE;
 
-    SELECT NgayKetThuc INTO NgayKetThuc
+    -- Lấy ngày kết thúc hợp đồng mới nhất của sinh viên
+    SELECT MAX(NgayKetThuc) INTO hanCuoi
     FROM HopDong
-    WHERE MaSV = MaSinhVien
-    ORDER BY NgayKetThuc DESC
-    LIMIT 1;
+    WHERE MaSV = maSV_input;
 
-    IF NgayKetThuc IS NULL THEN
+    -- Nếu chưa có hợp đồng, coi như không quá hạn
+    IF hanCuoi IS NULL THEN
         RETURN 0;
     END IF;
 
-    IF NgayKetThuc < CURDATE() THEN
-        RETURN 1; -- quá hạn
+    -- So sánh với ngày hiện tại
+    IF hanCuoi < CURDATE() THEN
+        RETURN 1; -- Quá hạn
     ELSE
-        RETURN 0; -- còn hạn
+        RETURN 0; -- Chưa quá hạn
     END IF;
-END//
+END$$
 DELIMITER ;
+
 
 
 -- Tạo PROCEDURE danh sách SV

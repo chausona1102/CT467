@@ -85,6 +85,7 @@ $router->post("/admin/contract/store","App\controllers\ContractControllers@store
 $router->get("/admin/contract/edit/{id}","App\controllers\ContractControllers@edit");
 $router->post("/admin/contract/update/{id}","App\controllers\ContractControllers@update");
 $router->post("/admin/contract/delete/{id}","App\controllers\ContractControllers@delete");
+$router->post("/admin/contract/check/{id}","App\controllers\ContractControllers@check");
 // Statistical management routes
 $router->get("/statistical_manage","App\controllers\StatisticalControllers@renderStatistical");
 $router->run();

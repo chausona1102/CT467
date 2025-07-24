@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0
+class ComposerStaticInit9c1f5bbdfe11b0c746b05e8dff10bd82
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -33,7 +33,6 @@ class ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0
         ),
         'M' => 
         array (
-            'MyCLabs\\Enum\\' => 13,
             'Matrix\\' => 7,
         ),
         'L' => 
@@ -97,10 +96,6 @@ class ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
         ),
-        'MyCLabs\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
-        ),
         'Matrix\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
@@ -153,10 +148,10 @@ class ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2796fd7c32724eb622fb7b17ebf136d0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9c1f5bbdfe11b0c746b05e8dff10bd82::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9c1f5bbdfe11b0c746b05e8dff10bd82::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9c1f5bbdfe11b0c746b05e8dff10bd82::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9c1f5bbdfe11b0c746b05e8dff10bd82::$classMap;
 
         }, null, ClassLoader::class);
     }

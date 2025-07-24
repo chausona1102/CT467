@@ -41,7 +41,7 @@
                     <?php unset($_SESSION['error']); ?>
                 </div>
             <?php endif; ?>
-            <form>
+            <form action="/admin/contract/store" method="post">
                 <div class="mb-3">
                     <label class="form-label">Mã hợp đồng</label>
                     <input type="text" class="form-control" name="ma_hd">
@@ -50,16 +50,22 @@
                     <label class="form-label">Mã sinh viên</label>
                     <select class="form-select js-select2" name="ma_sv">
                         <option value="">-- Chọn sinh viên --</option>
-                        <option value="SV001">SV001 - Nguyễn Văn A</option>
-                        <option value="SV002">SV002 - Trần Thị B</option>
+                        <?php foreach ($maSVList as $maSV): ?>
+                            <option value="<?= $maSV['MaSV'] ?>">
+                                <?= $maSV['MaSV'] ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Mã phòng</label>
                     <select class="form-select js-select2" name="ma_phong">
                         <option value="">-- Chọn phòng --</option>
-                        <option value="P101">P101</option>
-                        <option value="P102">P102</option>
+                        <?php foreach ($maPhongList as $maPhong): ?>
+                            <option value="<?= $maPhong['MaPhong'] ?>">
+                                <?= $maPhong['MaPhong'] ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="row">
@@ -73,7 +79,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Lưu</button>
-                <button type="reset" class="btn btn-secondary">Hủy</button>
+                <a href="/contract_manage" class="btn btn-secondary">Hủy</a>
             </form>
         </div>
     </div>

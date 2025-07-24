@@ -20,7 +20,7 @@
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 
-            <a href="/bill_manage?export=excel" class="btn btn-success mb-3">
+            <a href="/contract_manage?export=excel" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Print Excel
             </a>
 
@@ -62,13 +62,18 @@
                             <td><?php echo htmlspecialchars($contract['NgayBatDau']); ?></td>
                             <td><?php echo htmlspecialchars($contract['NgayKetThuc']); ?></td>
                             <td class="text-center align-middle">
-                                <div class="d-flex justify-content-center align-items-center">
+                                <div class="d-flex justify-content-center align-items-center gap-2">
                                     <a href="/admin/contract/edit/<?php echo htmlspecialchars($contract['MaHD']); ?>" class="btn btn-xs btn-warning">
-                                        <i alt="Edit" class="fa fa-pencil"></i> Sửa
+                                        Sửa
                                     </a>
-                                    <form class="ms-2" action="/admin/contract/delete/<?php echo htmlspecialchars($contract['MaHD']); ?>" method="POST">
+                                    <form action="/admin/contract/delete/<?php echo htmlspecialchars($contract['MaHD']); ?>" method="POST" style="display:inline;">
                                         <button type="submit" class="btn btn-xs btn-danger" name="delete-contract">
-                                            <i alt="Delete" class="fa fa-trash"></i> Xóa
+                                            Xóa
+                                        </button>
+                                    </form>
+                                    <form action="/admin/contract/check/<?php echo htmlspecialchars($contract['MaSV']); ?>" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-primary">
+                                            Kiểm Tra
                                         </button>
                                     </form>
                                 </div>
@@ -77,28 +82,55 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <!-- Table Ends Here -->
         </div>
     </div>
-    <div id="delete-confirm" class="modal fade" tabindex="-1">
+
+    <!-- Modal Kiểm Tra -->
+    <div class="modal fade" id="check-modal" tabindex="-1" aria-labelledby="checkModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="checkModalLabel"><i class="fas fa-info-circle"></i> Kết quả kiểm tra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <p class="lead">Are you sure you want to delete this service?</p>
+                    <p class="lead">
+                        <?php if (isset($_SESSION['info'])): ?>
+                            <?= htmlspecialchars($_SESSION['info']); ?>
+                            <?php unset($_SESSION['info']); ?>
+                        <?php else: ?>
+                            Không có thông tin kiểm tra.
+                        <?php endif; ?>
+                    </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal Xóa -->
+    <div id="delete-confirm" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle"></i> Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Hủy</button>
+                    <button type="button" class="btn btn-danger" id="delete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -120,23 +152,17 @@
             table.search(this.value).draw();
         });
 
+        // Modal xác nhận xóa
         const modalEl = document.getElementById('delete-confirm');
-        const confirmModal = new bootstrap.Modal(modalEl, {
-            backdrop: 'static',
-            keyboard: false
-        });
+        const confirmModal = new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: false });
         let currentForm = null;
 
-        const deleteButtons = document.querySelectorAll('button[name="delete-contract"]');
-        deleteButtons.forEach(button => {
+        document.querySelectorAll('button[name="delete-contract"]').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-
                 currentForm = button.closest('form');
-                const nameTd = button.closest('tr').querySelector('td:first-child');
-                const MaHD = nameTd ? nameTd.textContent.trim() : "này";
-                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa hợp đồng "${MaHD}"?`;
-
+                const MaHD = button.closest('tr').querySelector('td:first-child').textContent.trim();
+                document.querySelector('#delete-confirm .modal-body p').textContent = `Bạn có chắc muốn xóa hợp đồng "${MaHD}"?`;
                 confirmModal.show();
             });
         });
@@ -144,6 +170,13 @@
         document.getElementById('delete').addEventListener('click', function() {
             if (currentForm) currentForm.submit();
         });
+
+        // Mở modal kiểm tra nếu có thông tin trong session
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('showCheckModal') === '1') {
+            const checkModal = new bootstrap.Modal(document.getElementById('check-modal'));
+            checkModal.show();
+        }
     });
 </script>
 <?php $this->stop(); ?>
