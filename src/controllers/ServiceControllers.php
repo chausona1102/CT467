@@ -20,21 +20,12 @@ class ServiceControllers extends Controller
             $this->serviceModel->exportToExcel();
             return;
         }
-
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $limit = 10;
-        $offset = ($page - 1) * $limit;
-
-        $services = $this->serviceModel->getPaginated($limit, $offset);
-        $total = $this->serviceModel->countAll();
-        $totalPages = ceil($total / $limit);
-
-
+      
+        $services = $this->serviceModel->all();
+       
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
             $data = [
                 'services' => $services,
-                'totalPages' => $totalPages,
-                'currentPage' => $page,
                 'successMessage' => $_SESSION['success_Mess'] ?? null,
             ];
             $this->render('admin/service_manage', $data);
@@ -83,7 +74,7 @@ class ServiceControllers extends Controller
         }
 
         // Gọi hàm tạo mới
-        $success = $this->serviceModel->save($data); // Tạo thêm hàm create() trong model
+        $success = $this->serviceModel->add($data);
 
         if ($success) {
             $_SESSION['success'] = 'Thêm dịch vụ thành công!';
@@ -93,20 +84,68 @@ class ServiceControllers extends Controller
             $_SESSION['form'] = $data;
             header('Location: /admin/service/create');
         }
-
         exit;
     }
-
 
     public function edit($id)
     {
         $data = [
-            // 'service' => $serviceMdl->getServiceById($id) // Example of fetching service data by ID
+            'service' => $this->serviceModel->getServiceById($id),
+            'errors' => $_SESSION['errors'] ?? null,
         ];
         $this->render('admin/edit_service', $data);
     }
+
+    public function update()
+    {
+        $data = [
+            'old_id' => $_POST['old_id'] ?? '',
+            'MaDV' => $_POST['ma_dv'] ?? '',
+            'TenDV' => $_POST['ten_dv'] ?? '',
+            'DonGia' => $_POST['don_gia'] ?? ''
+        ];
+
+        // Kiểm tra dữ liệu đầu vào
+        if (empty($data['MaDV']) || empty($data['TenDV']) || empty($data['DonGia'])) {
+            $_SESSION['error'] = 'Vui lòng nhập đầy đủ thông tin.';
+            $_SESSION['form'] = $data;
+            header('Location: /admin/service/edit/' . $data['old_id']);
+            exit;
+        }
+
+        // Kiểm tra đơn giá là số dương
+        if (!is_numeric($data['DonGia']) || $data['DonGia'] <= 0) {
+            $_SESSION['error'] = 'Đơn giá phải là số dương.';
+            $_SESSION['form'] = $data;
+            header('Location: /admin/service/edit/' . $data['old_id']);
+            exit;
+        }
+
+        // Nếu mã DV bị thay đổi thì kiểm tra trùng mã
+        if ($data['MaDV'] !== $data['old_id']) {
+            if ($this->serviceModel->exists($data['MaDV'])) {
+                $_SESSION['error'] = 'Mã dịch vụ đã tồn tại.';
+                $_SESSION['form'] = $data;
+                header('Location: /admin/service/edit/' . $data['old_id']);
+                exit;
+            }
+        }
+
+        // Cập nhật dịch vụ
+        if ($this->serviceModel->update($data)) {
+            $_SESSION['success'] = 'Cập nhật dịch vụ thành công!';
+        } else {
+            $_SESSION['error'] = 'Đã xảy ra lỗi khi cập nhật dịch vụ.';
+        }
+        header('Location: /service_manage');
+        exit;
+    }
+
+
     public function delete($id)
     {
-        // Code to delete a service by ID
+        $this->serviceModel->delete($id);
+        header('Location: /service_manage');
+        exit;
     }
 }

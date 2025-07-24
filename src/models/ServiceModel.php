@@ -25,36 +25,40 @@ class ServiceModel extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Thêm mới hoặc cập nhật dịch vụ
-    public function save($data): bool
+    public function add($data): bool
     {
-        if (!isset($data['MaDV'], $data['TenDV'], $data['DonGia'])) {
-            return false;
-        }
-
-        $exists = $this->getServiceById($data['MaDV']);
-
-        if ($exists) {
-            // Cập nhật
-            $stmt = $this->conn->prepare("
-                UPDATE DichVu 
-                SET TenDV = :TenDV, DonGia = :DonGia 
-                WHERE MaDV = :MaDV
-            ");
-        } else {
-            // Thêm mới
-            $stmt = $this->conn->prepare("
-                INSERT INTO DichVu (MaDV, TenDV, DonGia) 
-                VALUES (:MaDV, :TenDV, :DonGia)
-            ");
-        }
-
+        $stmt = $this->conn->prepare("INSERT INTO DichVu (MaDV, TenDV, DonGia) 
+                VALUES (:MaDV, :TenDV, :DonGia)");
         $stmt->bindParam(':MaDV', $data['MaDV'], PDO::PARAM_STR);
         $stmt->bindParam(':TenDV', $data['TenDV'], PDO::PARAM_STR);
         $stmt->bindParam(':DonGia', $data['DonGia']);
-
         return $stmt->execute();
     }
+
+    public function exists($maDV)
+    {
+        $stmt = $this->conn->prepare("SELECT COUNT(*) FROM DichVu WHERE MaDV = ?");
+        $stmt->execute([$maDV]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function update($data): bool
+    {
+        $stmt = $this->conn->prepare("
+        UPDATE DichVu
+        SET 
+            MaDV = :MaDV,
+            TenDV = :TenDV,
+            DonGia = :DonGia
+        WHERE MaDV = :old_id
+    ");
+        $stmt->bindParam(':old_id', $data['old_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':MaDV', $data['MaDV'], PDO::PARAM_STR);
+        $stmt->bindParam(':TenDV', $data['TenDV'], PDO::PARAM_STR);
+        $stmt->bindParam(':DonGia', $data['DonGia']);
+        return $stmt->execute();
+    }
+
 
     // Xóa dịch vụ
     public function delete($id): bool
@@ -62,25 +66,6 @@ class ServiceModel extends Model
         $stmt = $this->conn->prepare("DELETE FROM DichVu WHERE MaDV = :MaDV");
         $stmt->bindParam(':MaDV', $id, PDO::PARAM_STR);
         return $stmt->execute();
-    }
-
-    // Lấy danh sách dịch vụ có phân trang
-    public function getPaginated($limit, $offset)
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM DichVu LIMIT :limit OFFSET :offset");
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // Đếm tổng số dịch vụ
-    public function countAll(): int
-    {
-        $stmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM DichVu");
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return (int) $result['total'];
     }
 
     // Xuất danh sách dịch vụ ra file Excel

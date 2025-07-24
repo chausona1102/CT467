@@ -54,19 +54,24 @@ $router->get("/service_manage","App\controllers\ServiceControllers@index");
 $router->get("/admin/service/create","App\controllers\ServiceControllers@create");
 $router->post("/admin/service/store","App\controllers\ServiceControllers@store");
 $router->get("/admin/service/edit/{id}","App\controllers\ServiceControllers@edit");
+$router->post("/admin/service/update/{id}","App\controllers\ServiceControllers@update");
 $router->post("/admin/service/delete/{id}","App\controllers\ServiceControllers@delete");
 
 // Use service management routes
-$router->get("/use_service","App\controllers\UseServiceControllers@renderUseService");
-$router->get("/admin/use-service/create","App\controllers\UseServiceControllers@addUseService");
-$router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@editUseService");
-$router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@deleteUseService");
+$router->get("/use_service","App\controllers\UseServiceControllers@index");
+$router->get("/admin/use-service/create","App\controllers\UseServiceControllers@create");
+$router->post("/admin/use-service/store","App\controllers\UseServiceControllers@store");
+$router->get("/admin/use-service/edit/{id}","App\controllers\UseServiceControllers@edit");
+$router->post("/admin/use-service/update/{id}","App\controllers\UseServiceControllers@update");
+$router->post("/admin/use-service/delete/{id}","App\controllers\UseServiceControllers@delete");
 
 // Bill management routes
-$router->get("/bill_manage","App\controllers\BillControllers@renderBill");
-$router->get("/admin/bill-manage/create","App\controllers\BillControllers@addBill");
-$router->get("/admin/bill-manage/edit/{id}","App\controllers\BillControllers@editBill");
-$router->post("/admin/bill-manage/delete/{id}","App\controllers\BillControllers@deleteBill");
+$router->get("/bill_manage","App\controllers\BillControllers@index");
+$router->get("/admin/bill-manage/create","App\controllers\BillControllers@create");
+$router->post("/admin/bill-manage/store","App\controllers\BillControllers@store");
+$router->get("/admin/bill-manage/edit/{id}","App\controllers\BillControllers@edit");
+$router->post("/admin/bill-manage/update/{id}","App\controllers\BillControllers@update");
+$router->post("/admin/bill-manage/delete/{id}","App\controllers\BillControllers@delete");
 
 // Contract management routes
 $router->get("/contract_manage","App\controllers\ContractControllers@renderContract");

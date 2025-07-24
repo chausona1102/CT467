@@ -36,10 +36,10 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Tổng tiền thanh toán</label>
-                    <input type="number" class="form-control" name="tong_tien" placeholder="500000">
+                    <input type="number" class="form-control" name="tong_tien">
                 </div>
                 <button type="submit" class="btn btn-primary">Lưu</button>
-                <button type="reset" class="btn btn-secondary">Hủy</button>
+                <a href="/bill_manage" class="btn btn-secondary">Hủy</a>
             </form>
         </div>
 
