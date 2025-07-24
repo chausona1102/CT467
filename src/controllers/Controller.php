@@ -11,7 +11,6 @@ class Controller
     public function __construct()
     {
         $this->view = new Engine(__DIR__ . '/../views', 'php');
-        // $this->view->addFolder('partials', __DIR__ . '/../views/partials');
     }
     public function render($template, $data = [])
     {

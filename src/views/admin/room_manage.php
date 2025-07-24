@@ -46,6 +46,9 @@
         <input type="submit" value="Tìm kiếm" class="btn btn-primary">
     </form>
 </div>
+<div id="print_f" class="d-flex flex-row justify-content-end px-4 mx-5">
+    <button id="exportExcelRoom" class="btn btn-primary" onclick="export_excel_room()">Print</button>
+</div>
 <div class="container">
     <div class="result"></div>
     <table class="table table-striped">
@@ -112,4 +115,5 @@
         </tbody>
         </table>
 </div>
+    <script src="/js/printf.js"></script>
 <?php $this->stop(); ?>

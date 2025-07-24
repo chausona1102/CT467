@@ -28,6 +28,11 @@ $router->post("/logout", function() {
     exit();
 });
 
+// print route
+
+$router->get('/export_excel_room', 'App\controllers\ExportExcelControllers@exportExcelRoom');
+$router->get('/export_excel_student', 'App\controllers\ExportExcelControllers@exportExcelStudent');
+
 // Room management routes
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
 $router->get("/filter_function","App\controllers\RoomControllers@filter_function");
