@@ -85,16 +85,16 @@ CREATE TABLE IF NOT EXISTS HoaDon (
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-select * from HoaDon;
-INSERT INTO HoaDon (MaHoaDon, MaSDDV, NgayLap, NgayHetHan, TrangThai)
-VALUES ('HD01', 'SD01', '2025-07-23', '2025-08-23', 0);
-SELECT * FROM SuDungDV WHERE MaSDDV = 'SD01';
-SELECT * FROM LoaiPhong;
-SELECT * FROM Phong;
+
+-- INSERT INTO HoaDon (MaHoaDon, MaSDDV, NgayLap, NgayHetHan, TrangThai)
+-- VALUES ('HD01', 'SD01', '2025-07-23', '2025-08-23', 0);
+-- SELECT * FROM SuDungDV WHERE MaSDDV = 'SD01';
+-- SELECT * FROM LoaiPhong;
+-- SELECT * FROM Phong;
 -- =========================
 -- Tạo FUNCTION kiểm tra quá hạn
 -- =========================
-DROP FUNCTION IF EXISTS KiemTraQuaHan;
+
 
 DELIMITER //
 CREATE FUNCTION KiemTraQuaHan(MaSinhVien VARCHAR(10))
@@ -124,7 +124,7 @@ DELIMITER ;
 -- =========================
 -- Tạo TRIGGER kiểm tra phòng đầy
 -- =========================
-DROP TRIGGER IF EXISTS KiemTraPhongTruocKhiThem;
+
 
 DELIMITER //
 CREATE TRIGGER KiemTraPhongTruocKhiThem
@@ -152,7 +152,6 @@ DELIMITER ;
 -- =========================
 -- Tạo PROCEDURE danh sách SV
 -- =========================
-DROP PROCEDURE IF EXISTS DanhSachSVTrongPhong;
 
 DELIMITER //
 CREATE PROCEDURE DanhSachSVTrongPhong(IN ma_phong VARCHAR(10))
@@ -454,5 +453,3 @@ CALL ThemSinhVien('B2000097', 'Vũ Thị Oanh', 'Nữ', '0912345097');
 CALL ThemSinhVien('C2000098', 'Bùi Thị Kim', 'Nữ', '0912345098');
 CALL ThemSinhVien('B2000099', 'Đặng Thị Hoa', 'Nữ', '0912345099');
 CALL ThemSinhVien('C2000100', 'Nguyễn Thị Ánh', 'Nữ', '0912345100'); 
-
-
