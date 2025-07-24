@@ -1,7 +1,7 @@
 <?php $this->layout('layout-admin'); ?>
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
-<link rel="stylesheet" href="/css/room_manage.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <?php $this->stop(); ?>
 <?php $this->start("page-content"); ?>
 <div class="container">
@@ -16,7 +16,7 @@
                 <?php unset($_SESSION['success_Mess']); ?>
             <?php endif; ?>
 
-            <a href="/admin/contract-manage/create" class="btn btn-success mb-3">
+            <a href="/admin/contract/create" class="btn btn-success mb-3">
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 
@@ -58,10 +58,10 @@
                         <td>2024-06-30</td>
                         <td class="text-center align-middle">
                             <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/contract-manage/edit/HD001" class="btn btn-xs btn-warning">
+                                <a href="/admin/contract/edit/HD001" class="btn btn-xs btn-warning">
                                     <i alt="Edit" class="fa fa-pencil"></i> Sửa
                                 </a>
-                                <form class="ms-2" action="/admin/contract-manage/delete/HD001" method="POST">
+                                <form class="ms-2" action="/admin/contract/delete/HD001" method="POST">
                                     <button type="submit" class="btn btn-xs btn-danger" name="delete-contract">
                                         <i alt="Delete" class="fa fa-trash"></i> Xóa
                                     </button>
@@ -93,13 +93,17 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let table = new DataTable("#contract", {
             responsive: true,
             pagingType: "simple_numbers",
             lengthChange: false,
-            searching: true
+            searching: true,
+            dom: 'lrtip'
         });
 
         document.getElementById("entries-per-page").addEventListener("change", function() {
@@ -110,34 +114,29 @@
             table.search(this.value).draw();
         });
 
+        const modalEl = document.getElementById('delete-confirm');
+        const confirmModal = new bootstrap.Modal(modalEl, {
+            backdrop: 'static',
+            keyboard: false
+        });
+        let currentForm = null;
+
         const deleteButtons = document.querySelectorAll('button[name="delete-contract"]');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-                const form = button.closest('form');
-                const nameTd = button.closest('tr').querySelector('td:nth-child(3)');
-                if (nameTd) {
-                    document.querySelector('.modal-body p').textContent =
-                        `Do you want to delete "${nameTd.textContent}"?`;
-                }
-                const submitForm = function() {
-                    form.submit();
-                };
-                document.getElementById('delete').addEventListener('click', submitForm, {
-                    once: true
-                });
 
-                const modalEl = document.getElementById('delete-confirm');
-                modalEl.addEventListener('hidden.bs.modal', function() {
-                    document.getElementById('delete').removeEventListener('click', submitForm);
-                });
+                currentForm = button.closest('form');
+                const nameTd = button.closest('tr').querySelector('td:first-child');
+                const MaHD = nameTd ? nameTd.textContent.trim() : "này";
+                document.querySelector('.modal-body p').textContent = `Bạn có chắc muốn xóa hợp đồng "${MaHD}"?`;
 
-                const confirmModal = new bootstrap.Modal(modalEl, {
-                    backdrop: 'static',
-                    keyboard: false
-                });
                 confirmModal.show();
             });
+        });
+
+        document.getElementById('delete').addEventListener('click', function() {
+            if (currentForm) currentForm.submit();
         });
     });
 </script>

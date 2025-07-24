@@ -74,10 +74,12 @@ $router->post("/admin/bill/update/{id}","App\controllers\BillControllers@update"
 $router->post("/admin/bill/delete/{id}","App\controllers\BillControllers@delete");
 
 // Contract management routes
-$router->get("/contract_manage","App\controllers\ContractControllers@renderContract");
-$router->get("/admin/contract-manage/create","App\controllers\ContractControllers@addContract");
-$router->get("/admin/contract-manage/edit/{id}","App\controllers\ContractControllers@editContract");
-$router->post("/admin/contract-manage/delete/{id}","App\controllers\ContractControllers@deleteContract");
+$router->get("/contract_manage","App\controllers\ContractControllers@index");
+$router->get("/admin/contract/create","App\controllers\ContractControllers@create");
+$router->post("/admin/contract/store","App\controllers\ContractControllers@store");
+$router->get("/admin/contract/edit/{id}","App\controllers\ContractControllers@edit");
+$router->post("/admin/contract/update/{id}","App\controllers\ContractControllers@update");
+$router->post("/admin/contract/delete/{id}","App\controllers\ContractControllers@delete");
 // Statistical management routes
 $router->get("/statistical_manage","App\controllers\StatisticalControllers@renderStatistical");
 $router->run();
