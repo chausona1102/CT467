@@ -115,9 +115,8 @@ BEGIN
 END//
 DELIMITER ;
 
--- =========================
+
 -- Tạo PROCEDURE danh sách SV
--- =========================
 DROP PROCEDURE IF EXISTS DanhSachSVTrongPhong;
 
 DELIMITER //
