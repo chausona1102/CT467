@@ -4,7 +4,7 @@ namespace App\controllers;
 
 class ContractControllers extends Controller
 {
-    public function renderContract()
+    public function index()
     {
         $data = [
             // 'contracts' => $contractMdl->select() // Example of fetching contracts
@@ -17,7 +17,7 @@ class ContractControllers extends Controller
         }
     }
 
-    public function addContract()
+    public function create()
     {
         $data = [
             // 'services' => $serviceMdl->select() // Example of fetching services for contract creation
@@ -25,7 +25,12 @@ class ContractControllers extends Controller
         $this->render('admin/create_contract', $data);
     }
 
-    public function editContract($id)
+    public function store()
+    {
+
+    }
+
+    public function edit($id)
     {
         $data = [
             // 'contract' => $contractMdl->selectById($id) // Example of fetching a contract by ID
@@ -33,7 +38,12 @@ class ContractControllers extends Controller
         $this->render('admin/edit_contract', $data);
     }
 
-    public function deleteContract($id)
+    public function update()
+    {
+
+    }
+
+    public function delete($id)
     {
         // Code to delete a contract by ID
     }
