@@ -44,7 +44,7 @@
             <form>
                 <div class="mb-3">
                     <label class="form-label">Mã hợp đồng</label>
-                    <input type="text" class="form-control" name="ma_hd" placeholder="HD001">
+                    <input type="text" class="form-control" name="ma_hd">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Mã sinh viên</label>

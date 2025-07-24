@@ -106,6 +106,7 @@
                                 <td>{$room['TinhTrang']}</td>
                                 <td>
                                     <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
+                                    <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
                                 </td>
                             </tr>
                         ";

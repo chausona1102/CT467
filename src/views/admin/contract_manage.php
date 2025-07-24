@@ -20,6 +20,10 @@
                 <i class="fas fa-plus-circle"></i> Tạo thêm
             </a>
 
+            <a href="/bill_manage?export=excel" class="btn btn-success mb-3">
+                <i class="fas fa-plus-circle"></i> Print Excel
+            </a>
+
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     <label class="me-2">Show</label>
@@ -50,25 +54,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>HD001</td>
-                        <td>SDDV01</td>
-                        <td>SP001</td>
-                        <td>2024-06-01</td>
-                        <td>2024-06-30</td>
-                        <td class="text-center align-middle">
-                            <div class="d-flex justify-content-center align-items-center">
-                                <a href="/admin/contract/edit/HD001" class="btn btn-xs btn-warning">
-                                    <i alt="Edit" class="fa fa-pencil"></i> Sửa
-                                </a>
-                                <form class="ms-2" action="/admin/contract/delete/HD001" method="POST">
-                                    <button type="submit" class="btn btn-xs btn-danger" name="delete-contract">
-                                        <i alt="Delete" class="fa fa-trash"></i> Xóa
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php foreach ($contract as $contract): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($contract['MaHD']); ?></td>
+                            <td><?php echo htmlspecialchars($contract['MaSV']); ?></td>
+                            <td><?php echo htmlspecialchars($contract['MaPhong']); ?></td>
+                            <td><?php echo htmlspecialchars($contract['NgayBatDau']); ?></td>
+                            <td><?php echo htmlspecialchars($contract['NgayKetThuc']); ?></td>
+                            <td class="text-center align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="/admin/contract/edit/<?php echo htmlspecialchars($contract['MaHD']); ?>" class="btn btn-xs btn-warning">
+                                        <i alt="Edit" class="fa fa-pencil"></i> Sửa
+                                    </a>
+                                    <form class="ms-2" action="/admin/contract/delete/<?php echo htmlspecialchars($contract['MaHD']); ?>" method="POST">
+                                        <button type="submit" class="btn btn-xs btn-danger" name="delete-contract">
+                                            <i alt="Delete" class="fa fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <!-- Table Ends Here -->
