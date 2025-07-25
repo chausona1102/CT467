@@ -26,14 +26,16 @@ class RoomModel extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function addRoom($data)
+    public function addRoom($maphong, $maloaiphong, $sophong, $soluongtoida, $gioitinh)
     {
-        $stmt = $this->conn->prepare("INSERT INTO rooms (name, category, status) VALUES (:name, :category, :status)");
-        $stmt->bindParam(':name', $data['name']);
-        $stmt->bindParam(':category', $data['category']);
-        $stmt->bindParam(':status', $data['status']);
+        $stmt = $this->conn->prepare("INSERT INTO Phong (MaPhong, MaLoaiPhong, SoPhong, SoLuongToiDa, GioiTinh) VALUES (:MaPhong, :MaLoaiPhong, :SoPhong, :SoLuongToiDa, :GioiTinh)");
+        $stmt->bindParam(':MaPhong', $maphong);
+        $stmt->bindParam(':MaLoaiPhong', $maloaiphong);
+        $stmt->bindParam(':SoPhong', $sophong);
+        $stmt->bindParam(':SoLuongToiDa', $soluongtoida);
+        $stmt->bindParam(':GioiTinh', $gioitinh);
         return $stmt->execute();
-    }
+    }   
 
     public function updateRoom($id, $data)
     {
@@ -80,5 +82,4 @@ class RoomModel extends Model
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

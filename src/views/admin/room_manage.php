@@ -1,4 +1,4 @@
-<?php $this->layout('layout-admin', ['roomsL10' => $roomsL10, 'filter_result' => $filter_result, 'roomID' => $maphong, 'memberRoom' => $memberRoom]); ?>
+<?php $this->layout('layout-admin', ['roomsL10' => $roomsL10, 'filter_result' => $filter_result, 'roomID' => $maphong, 'memberRoom' => $memberRoom, 'roomType' => $roomType]); ?>
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/room_manage.css">
@@ -46,7 +46,8 @@
         <input type="submit" value="Tìm kiếm" class="btn btn-primary">
     </form>
 </div>
-<div id="print_f" class="d-flex flex-row justify-content-end px-4 mx-5">
+<div id="print_f" class="d-flex flex-row justify-content-start px-4 mx-5">
+    <!-- <a href="#" class="btn btn-primary mx-2" data-bs-toggle=modal data-bs-target=#addRoomModal> Thêm</a> -->
     <button id="exportExcelRoom" class="btn btn-success" onclick="export_excel_room()">Xuất Excel</button>
 </div>
 <div class="container">
@@ -123,9 +124,9 @@
         </tbody>
     </table>
 </div>
-<?php 
-    if(isset($memberRoom) && !empty($memberRoom)) {
-        echo "
+<?php
+if (isset($memberRoom) && !empty($memberRoom)) {
+    echo "
             <div class='modal' id='showModal' tabindex='1040' aria-labelledby='exampleModalLabel'>
                 <div class='modal-dialog p-2 border border-info rounded' style='background-color: #fff'>
                     <h5 class='modal-title text-center'>Thông tin phòng $roomID</h5>
@@ -141,8 +142,8 @@
                         </thead>
                         <tbody>
         ";
-        foreach ($memberRoom as $row) {
-            echo "
+    foreach ($memberRoom as $row) {
+        echo "
             <tr>
                             <td>{$row['MaSV']}</td>
                             <td>{$row['HoTen']}</td>
@@ -150,8 +151,8 @@
                             <td>{$row['SoDienThoai']}</td>
             </tr>
             ";
-        }
-        echo "
+    }
+    echo "
                         </tbody>
                         </table>
                         <div class='d-flex justify-content-end'>
@@ -162,8 +163,70 @@
                 </div>
             </div>
         ";
-    }
+} else if(isset($memberRoom) && empty($memberRoom)) {
+    echo "
+            <div class='modal' id='showModal' tabindex='1040' aria-labelledby='exampleModalLabel'>
+                <div class='modal-dialog p-2 border border-info rounded' style='background-color: #fff'>
+                    <h5 class='modal-title text-center'>Thông tin phòng $roomID</h5>
+                    <div class='modal-body'>
+                        <h5 class='text-danger'>Không có thành viên nào</h5>
+                    <div class='d-flex justify-content-end'>
+                        <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
+                    </div>
+        
+                    </div>
+                </div>
+            </div>
+        ";
+}
+
 ?>
+<div class="modal fade" id="addRoomModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="POST" action="/room_manage/add">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm phòng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit-ten" class="form-label">Mã phòng</label>
+                        <input type="text" name="MaPhong" id="edit-ten" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="MaLoaiPhong">Mã loại phòng</label><br>
+                        <select name="MaLoaiPhong" id="MaLoaiPhong" class="col-12 p-2">
+                            <?php
+                                foreach ($roomType as $row) {
+                                    echo "
+                                    <option value='{$row['MaLoaiPhong']}'>{$row['MaLoaiPhong']}</option>
+                                    ";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    <div class="mb-3">
+                        <label for="edit-ten" class="form-label">Số phòng</label>
+                        <input type="text" name="SoPhong" id="edit-ten" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-gia" class="form-label">Số lượng tối đa</label>
+                        <input type="number" name="SoLuongToiDa" id="edit-gia" class="form-control" required>
+                    </div>
+                    <div class="mb-3 g-2">
+                                <label for="male" class="mx-2">Nam</label><input type="radio" name="GioiTinh" id="male" value="Nam">
+                                <label for="female" class="mx-2">Nữ</label><input type="radio" name="GioiTinh" id="female" value="Nữ">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <script src="/js/printf.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -13,8 +13,10 @@ class RoomControllers extends Controller
         ];
         if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
             $roomMdl = new \App\models\RoomModel();
+            $rmTypeMdl = new \App\models\RoomTypeModel();
             $n = 10;
             $data['roomsL10'] = $roomMdl->selectLimit($n);
+            $data['roomType'] = $rmTypeMdl->getAllRoomTypes();
         } else {
             header('Location: /login');
             exit();
@@ -24,9 +26,19 @@ class RoomControllers extends Controller
 
     public function addRoom()
     {
-        // Logic to add a new room
-        // This could involve saving data to a database
-        echo "Add Room functionality not implemented yet.";
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maphong = $_POST['MaPhong'] ?? '';
+            $maloaiphong = $_POST['MaLoaiPhong'] ?? '';
+            $sophong = $_POST['SoPhong'] ?? '';
+            $soluongtoida = $_POST['SoLuongToiDa'] ?? '';
+            $gioitinh = $_POST['GioiTinh'] ?? '';
+            echo $maphong, $maloaiphong, $sophong, $soluongtoida, $gioitinh;
+            $mdl = new \App\models\RoomModel();
+            $addMdl =  $mdl->addRoom($maphong, $maloaiphong, $sophong, $soluongtoida, $gioitinh);
+            if($addMdl) {
+                echo "thanh cong";
+            }else echo "that bai";
+        }
     }
 
     public function editRoom($id)
@@ -43,11 +55,13 @@ class RoomControllers extends Controller
             $member = $_GET['member'] ?? '';
             $sex = $_GET['sex'] ?? '';
             $status = $_GET['status'] ?? '';
-
+            $rmTypeMdl = new \App\models\RoomTypeModel();
             $roomMdl = new \App\models\RoomModel();
             $filter_result = $roomMdl->filter($member, $sex, $status);
+            $roomType = $rmTypeMdl->getAllRoomTypes();
             $data = [
-                'filter_result' => $filter_result
+                'filter_result' => $filter_result,
+                'roomType' => $roomType
             ];
             $this->render('admin/room_manage', $data);
         } else {
@@ -66,14 +80,17 @@ class RoomControllers extends Controller
         // echo "Success";
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $maphong = $_POST['MaPhong'] ?? '';
+            $rmTypeMdl = new \App\models\RoomTypeModel();
             $mdl = new \App\models\RoomModel();
             $n = 10;
             $roomsL10 = $mdl->selectLimit($n);
             $rmMdl = $mdl->laySinhVienTrongPhong($maphong);
+            $roomType = $rmTypeMdl->getAllRoomTypes();
             $data = [
                 'memberRoom' => $rmMdl,
                 'roomID' => $maphong,
-                'roomsL10' => $roomsL10
+                'roomsL10' => $roomsL10,
+                'roomType' => $roomType
             ];
             $this->render('admin/room_manage', $data);
         }
