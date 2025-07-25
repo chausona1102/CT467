@@ -410,3 +410,57 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE ThemHopDong (
+    IN p_MaHD VARCHAR(10),
+    IN p_MaSV VARCHAR(10),
+    IN p_MaPhong VARCHAR(10),
+    IN p_NgayBatDau DATE,
+    IN p_NgayKetThuc DATE
+)
+BEGIN
+    DECLARE v_SoLuongToiDa INT;
+    DECLARE v_SoLuongDangO INT;
+    DECLARE v_CountHD INT;
+
+    -- Kiểm tra trùng mã hợp đồng
+    IF EXISTS (SELECT 1 FROM HopDong WHERE MaHD = p_MaHD) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Mã hợp đồng đã tồn tại.';
+    END IF;
+
+    -- Kiểm tra sinh viên đã có hợp đồng hiệu lực chưa
+    IF EXISTS (
+        SELECT 1 FROM HopDong
+        WHERE MaSV = p_MaSV
+          AND p_NgayBatDau <= NgayKetThuc
+          AND p_NgayKetThuc >= NgayBatDau
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Sinh viên đã có hợp đồng hiệu lực.';
+    END IF;
+
+    -- Kiểm tra phòng có tồn tại và còn chỗ
+    SELECT SoLuongToiDa INTO v_SoLuongToiDa FROM Phong WHERE MaPhong = p_MaPhong;
+    
+    IF v_SoLuongToiDa IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Phòng không tồn tại.';
+    END IF;
+
+    -- Đếm số người hiện đang ở trong phòng theo các hợp đồng chồng thời gian
+    SELECT COUNT(*) INTO v_SoLuongDangO
+    FROM HopDong
+    WHERE MaPhong = p_MaPhong
+      AND p_NgayBatDau <= NgayKetThuc
+      AND p_NgayKetThuc >= NgayBatDau;
+
+    IF v_SoLuongDangO >= v_SoLuongToiDa THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Phòng đã đầy.';
+    END IF;
+
+    -- Thêm hợp đồng
+    INSERT INTO HopDong (MaHD, MaSV, MaPhong, NgayBatDau, NgayKetThuc)
+    VALUES (p_MaHD, p_MaSV, p_MaPhong, p_NgayBatDau, p_NgayKetThuc);
+END$$
+
+DELIMITER ;
