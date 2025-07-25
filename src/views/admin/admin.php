@@ -22,14 +22,14 @@
                 </div>
             </div>
         </a>
-        <a href="/statistical_manage" class="col-2 d-block m-2">
+        <!-- <a href="/statistical_manage" class="col-2 d-block m-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/audit-pie-chart-5161541-4300944.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Báo cáo thống kê</h5>
                 </div>
             </div>
-        </a>
+        </a> Sắp có --> 
         <a href="/cost_manage" class="col-2 d-block m-2">
             <div class="card" style="width: 12rem;">
                 <img src="https://static.vecteezy.com/system/resources/previews/013/530/940/original/money-money-dollar-icon-sign-money-dollar-icon-money-icon-isolated-on-white-background-money-icon-with-hand-design-illustration-money-icon-flat-money-simple-sign-free-vector.jpg" class="card-img-top" alt="...">

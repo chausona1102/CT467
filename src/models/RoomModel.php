@@ -70,4 +70,15 @@ class RoomModel extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    public function laySinhVienTrongPhong($maphong) {
+        $stmt = $this->conn->prepare('SELECT sv.MaSV, sv.HoTen, sv.GioiTinh, sv.SoDienThoai
+                            FROM HopDong hd
+                            JOIN SinhVien sv ON sv.MaSV = hd.MaSV
+                            WHERE hd.MaPhong = :maphong');
+        $stmt->bindParam(":maphong", $maphong);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

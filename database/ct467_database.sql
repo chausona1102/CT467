@@ -290,6 +290,16 @@ BEGIN
     DECLARE phongGender VARCHAR(5);
     DECLARE svGender VARCHAR(5);
 
+    IF EXISTS (
+        SELECT 1 FROM HopDong
+        WHERE MaSV = NEW.MaSV
+          AND CURDATE() BETWEEN NgayBatDau AND NgayKetThuc
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Sinh viên đã có hợp đồng còn hiệu lực!';
+    END IF;
+
+
     -- Lấy giới tính của phòng và số lượng
     SELECT GioiTinh, SoLuongHienTai, SoLuongToiDa
     INTO phongGender, currentCount, maxCount

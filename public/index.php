@@ -36,6 +36,7 @@ $router->get('/export_excel_student', 'App\controllers\ExportExcelControllers@ex
 // Room management routes
 $router->get("/room_manage","App\controllers\RoomControllers@renderRoom");
 $router->get("/filter_function","App\controllers\RoomControllers@filter_function");
+$router->post("/api/phong/sinhvien", "App\controllers\RoomControllers@laySinhVienTrongPhong");
 
 // Room Type management routes
 $router->get("/room_type_manage","App\controllers\RoomTypeControllers@renderRoomType");

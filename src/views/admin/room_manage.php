@@ -1,4 +1,4 @@
-<?php $this->layout('layout-admin', ['roomsL10' => $roomsL10 , 'filter_result' => $filter_result]); ?>
+<?php $this->layout('layout-admin', ['roomsL10' => $roomsL10, 'filter_result' => $filter_result, 'roomID' => $maphong, 'memberRoom' => $memberRoom]); ?>
 <?php $this->start('page-css'); ?>
 <link rel="stylesheet" href="/css/admin.css">
 <link rel="stylesheet" href="/css/room_manage.css">
@@ -47,7 +47,7 @@
     </form>
 </div>
 <div id="print_f" class="d-flex flex-row justify-content-end px-4 mx-5">
-    <button id="exportExcelRoom" class="btn btn-primary" onclick="export_excel_room()">Print</button>
+    <button id="exportExcelRoom" class="btn btn-success" onclick="export_excel_room()">Xuất Excel</button>
 </div>
 <div class="container">
     <div class="result"></div>
@@ -65,12 +65,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php 
-                if(isset($filter_result)) {
-                    if(!empty($filter_result)) {
-                        foreach ($filter_result as $row) {
-                            $tinhtrang = $row['TinhTrang'] ? 'Trống' : 'Đầy';
-                            echo "
+            <?php
+            if (isset($filter_result)) {
+                if (!empty($filter_result)) {
+                    foreach ($filter_result as $row) {
+                        $tinhtrang = $row['TinhTrang'] ? 'Trống' : 'Đầy';
+                        $maphong = $row['MaPhong'];
+                        echo "
                                 <tr>
                                     <td>{$row['MaPhong']}</td>
                                     <td>{$row['MaLoaiPhong']}</td>
@@ -80,22 +81,26 @@
                                     <td>{$row['GioiTinh']}</td>
                                     <td>{$tinhtrang}</td>
                                     <td>
-                                        <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
-                                        <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
+                                        <form method='post' action='/api/phong/sinhvien/'>
+                                            <input type='hidden' name='MaPhong' value='$maphong'></input>
+                                            <button type='submit' class='btn btn-warning'>Xem thành viên</button>
+                                        </form>
                                     </td>
                                 </tr>
                             ";
-                        }
-                    } else {
-                        echo "
+                    }
+                } else {
+                    echo "
                                 <h3>
                                     Không tìm thấy kết quả
                                 </h3>
                         ";
-                    }
-                }else if(isset($roomsL10)) {
-                    foreach ($roomsL10 as $room) {
-                        echo "
+                }
+            } else if (isset($roomsL10)) {
+                foreach ($roomsL10 as $room) {
+                    $tinhtrang = $room['TinhTrang'] ? 'Trống' : 'Đầy';
+                    $maphong = $room['MaPhong'];
+                    echo "
                             <tr>
                                 <td>{$room['MaPhong']}</td>
                                 <td>{$room['MaLoaiPhong']}</td>
@@ -103,18 +108,72 @@
                                 <td>{$room['SoLuongToiDa']}</td>
                                 <td>{$room['SoLuongHienTai']}</td>
                                 <td>{$room['GioiTinh']}</td>
-                                <td>{$room['TinhTrang']}</td>
+                                <td>{$tinhtrang}</td>
                                 <td>
-                                    <a href=\"/edit_room/1\" class=\"btn btn-warning\">Xem thành viên</a>
-                                    <a href=\"/delete_room/1\" class=\"btn btn-danger\">Giải phóng</a>
+                                    <form method='post' action='/api/phong/sinhvien/'>
+                                        <input type='hidden' name='MaPhong' value='$maphong'></input>
+                                        <button type='submit' class='btn btn-warning'>Xem thành viên</button>
+                                    </form>
                                 </td>
                             </tr>
                         ";
-                    }
                 }
+            }
             ?>
         </tbody>
-        </table>
+    </table>
 </div>
-    <script src="/js/printf.js"></script>
+<?php 
+    if(isset($memberRoom) && !empty($memberRoom)) {
+        echo "
+            <div class='modal' id='showModal' tabindex='1040' aria-labelledby='exampleModalLabel'>
+                <div class='modal-dialog p-2 border border-info rounded' style='background-color: #fff'>
+                    <h5 class='modal-title text-center'>Thông tin phòng $roomID</h5>
+                    <div class='modal-body'>
+                        <table class='table table-striped'>
+                        <thead>
+                            <tr>
+                                <th scope='col'>Mã sinh viên</th>
+                                <th scope='col'>Họ Tên</th>
+                                <th scope='col'>Giới tính</th>
+                                <th scope='col'>Số điện thoại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+        ";
+        foreach ($memberRoom as $row) {
+            echo "
+            <tr>
+                            <td>{$row['MaSV']}</td>
+                            <td>{$row['HoTen']}</td>
+                            <td>{$row['GioiTinh']}</td>
+                            <td>{$row['SoDienThoai']}</td>
+            </tr>
+            ";
+        }
+        echo "
+                        </tbody>
+                        </table>
+                        <div class='d-flex justify-content-end'>
+                            <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        ";
+    }
+?>
+<script src="/js/printf.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Nếu modal tồn tại thì dùng Bootstrap để show nó
+        const modalElement = document.getElementById('showModal');
+        if (modalElement) {
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        }
+    });
+</script>
+
 <?php $this->stop(); ?>

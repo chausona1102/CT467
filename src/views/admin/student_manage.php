@@ -41,7 +41,7 @@
     </form>
 </div>
 <div id="print_f" class="d-flex flex-row justify-content-end px-4 mx-5">
-    <button id="exportExcelStudent" class="btn btn-primary" onclick="export_excel_student()">Xuất excel</button>
+    <button id="exportExcelStudent" class="btn btn-success" onclick="export_excel_student()">Xuất excel</button>
 </div>
 <div class="container">
     <table class="table table-striped">

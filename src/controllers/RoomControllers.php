@@ -35,23 +35,49 @@ class RoomControllers extends Controller
         // This could involve fetching data from a database and updating it
         echo "Edit Room functionality not implemented yet for room ID: $id";
     }
-    public function filter_function() {
+    public function filter_function()
+    {
         // Logic to filter rooms based on criteria
         // This could involve fetching filtered data from a database
-        if($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $member = $_GET['member'] ?? '';
             $sex = $_GET['sex'] ?? '';
             $status = $_GET['status'] ?? '';
-    
+
             $roomMdl = new \App\models\RoomModel();
-            $filter_result= $roomMdl->filter($member, $sex, $status);
+            $filter_result = $roomMdl->filter($member, $sex, $status);
             $data = [
                 'filter_result' => $filter_result
             ];
             $this->render('admin/room_manage', $data);
-        }else {
+        } else {
             echo "<script>alert('Lỗi method')</script>";
             return;
         }
     }
+    public function laySinhVienTrongPhong()
+    {
+        //     $sql = "
+        //     SELECT sv.MaSV, sv.HoTen
+        //     FROM HopDong hd
+        //     JOIN SinhVien sv ON sv.MaSV = hd.MaSV
+        //     WHERE hd.MaPhong = ?
+        // ";
+        // echo "Success";
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $maphong = $_POST['MaPhong'] ?? '';
+            $mdl = new \App\models\RoomModel();
+            $n = 10;
+            $roomsL10 = $mdl->selectLimit($n);
+            $rmMdl = $mdl->laySinhVienTrongPhong($maphong);
+            $data = [
+                'memberRoom' => $rmMdl,
+                'roomID' => $maphong,
+                'roomsL10' => $roomsL10
+            ];
+            $this->render('admin/room_manage', $data);
+        }
+
+    }
+
 }
